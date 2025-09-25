@@ -19,7 +19,7 @@ export class GetStudyUseCase {
     return {
       ...data,
       length,
-      studies,
+      data: studies,
       next:
         nextOffset < length
           ? `/study?offset=${nextOffset}&limit=${data.limit}`
@@ -35,7 +35,7 @@ export class GetStudyByIdUseCase {
   constructor(private studyRepository: IStudyRepository) {}
 
   async execute(id: string): Promise<Study | null> {
-    const study = await this.studyRepository.findStudyById(id);
+    const study = await this.studyRepository.findById(id);
 
     return study;
   }
