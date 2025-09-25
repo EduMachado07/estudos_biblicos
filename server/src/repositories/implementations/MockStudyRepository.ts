@@ -1,93 +1,66 @@
 import { Study } from "../../entities/Study";
 import { IStudyRepository } from "../IStudyRepository";
 import { BadRequest } from "../IErrorRepository";
+import { MockUserRepository } from "./MockUserRepository";
+import { IUserRepository } from "../IUserRepository";
 
 export let MockStudies: Study[] = [
   new Study({
-    title: "Estudo sobre React",
-    description: "Introdução aos fundamentos do React e criação de componentes reutilizáveis.",
-    body: "Conteúdo detalhado sobre componentes, props e estado no React.",
-    author: "Eduardo Machado",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Node.js com Express",
-    description: "Construção de APIs RESTful usando Node.js e Express.",
-    body: "Passo a passo de como estruturar rotas, middlewares e controladores.",
-    author: "Mariana Silva",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Banco de Dados Relacional",
-    description: "Fundamentos de SQL e boas práticas no uso de bancos relacionais.",
-    body: "Exemplos de criação de tabelas, joins e normalização.",
-    author: "Carlos Pereira",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "TypeScript Avançado",
-    description: "Exploração de tipos genéricos, interfaces e utility types.",
-    body: "Dicas práticas para tipar melhor seu código e evitar bugs.",
-    author: "Fernanda Costa",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Testes com Jest",
-    description: "Criação de testes unitários e mocks para aplicações JavaScript.",
-    body: "Explicação sobre TDD e como estruturar testes de forma clara.",
-    author: "Lucas Almeida",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Next.js na Prática",
-    description: "Aplicações modernas usando SSR e rotas dinâmicas no Next.js.",
-    body: "Como aproveitar as features de API Routes e Static Generation.",
-    author: "Julia Santos",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Segurança em APIs",
-    description: "Boas práticas para proteger APIs com autenticação e JWT.",
-    body: "Explicação sobre tokens de acesso, refresh tokens e middlewares.",
-    author: "Rafael Oliveira",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Git e Versionamento",
-    description: "Controle de versão eficiente usando Git e GitHub.",
-    body: "Conceitos de branch, merge, pull requests e fluxo de trabalho.",
-    author: "Beatriz Rocha",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Design Patterns em JS",
-    description: "Aplicação de padrões de projeto no desenvolvimento front-end.",
-    body: "Exemplos de Singleton, Factory e Observer em JavaScript.",
-    author: "André Carvalho",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
-  }),
-  new Study({
-    title: "Docker para Desenvolvedores",
-    description: "Introdução ao uso de containers para aplicações modernas.",
-    body: "Como criar imagens, rodar containers e integrar com o Node.js.",
-    author: "Camila Ferreira",
-    thumbnailUrl: "thumbnailUrl",
-    thumbnailId: "thumbnailId",
+    title: "Estudo sobre TypeScript",
+    description: "Um estudo detalhado sobre TypeScript.",
+    thumbnailId: "thumb1",
+    thumbnailUrl: "http://example.com/thumb1.jpg",
+    body: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Conteúdo do estudo sobre TypeScript."}]}]}',
+    author: "user1",
+    tags: ["TypeScript", "JavaScript"],
   }),
 ];
 
 export class MockStudyRepository implements IStudyRepository {
+  async createSlug(
+    data: Study,
+    userRepository: IUserRepository
+  ): Promise<string> {
+    const authorName = await userRepository.FindUserById(data.author);
+    const authorSlug = authorName.name
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    const titleSlug = data.title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+    let slug = `${authorSlug}/${titleSlug}`;
+    let version = 2;
+
+    // loop até achar slug único
+    while (MockStudies.find((study) => study.slug === slug)) {
+      slug = `${authorSlug}/${titleSlug}/v${version}`;
+      version++;
+    }
+
+    data.slug = slug;
+
+    return data.slug;
+  }
+  async setReadingTime(body: string): Promise<number> {
+    const words = body.trim().split(/\s+/).length; // conta palavras
+    const readingTime = Math.ceil(words / 200); // minutos
+    return readingTime;
+  }
   async create(data: Study): Promise<Study> {
-    MockStudies.push(data);
+    const slug = await this.createSlug(data, new MockUserRepository());  
+    const readingTime = await this.setReadingTime(data); 
+
+    MockStudies.push({
+      ...data,
+      slug,
+      readingTime
+    });
 
     return data;
   }
