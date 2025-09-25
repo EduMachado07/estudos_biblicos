@@ -11,10 +11,10 @@ export interface IStudies {
   description: string;
   thumbnailUrl: string;
   body: string;
-  author: string;
+  authorName: string;
   slug: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
                 id={study.id!}
                 title={study.title}
                 description={study.description}
-                author={study.author}
+                author={study.authorName}
                 createdAt={study.createdAt}
               />
             </StudyCard.Root>

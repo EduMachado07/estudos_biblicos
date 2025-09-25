@@ -4,14 +4,7 @@ import { IUserRepository } from "../IUserRepository";
 // A classe representa um repositorio de exemplo.
 // Pode interagir com banco de dados ou APIs.
 
-export let MockUser: User[] = [
-  new User({
-    name: "User Test 1",
-    email: "user.test@gmail.com",
-    password: "1234567",
-    role: Role.AUTHOR,
-  }),
-];
+export let MockUser: User[] = [];
 
 export class MockUserRepository implements IUserRepository {
   async Register(data: User): Promise<User> {
@@ -25,8 +18,8 @@ export class MockUserRepository implements IUserRepository {
     return user;
   }
   async FindUserById(id: string): Promise<User | null> {
-    const user: User = MockUser.find((user) => user.id === id) || null;
+    const user = MockUser.find((user) => user.id === id) || null;
 
-    return user;
+    return user || null;
   }
 }

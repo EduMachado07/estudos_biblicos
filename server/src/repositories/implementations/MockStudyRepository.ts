@@ -11,18 +11,17 @@ export let MockStudies: Study[] = [
     thumbnailId: "thumb1",
     thumbnailUrl: "http://example.com/thumb1.jpg",
     body: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Conteúdo do estudo sobre TypeScript."}]}]}',
-    author: "user1",
-    tags: ["TypeScript", "JavaScript"],
+    authorId: "user1",
+    authorName: "Alice",
+    tag: "Cura",
   }),
 ];
 
 export class MockStudyRepository implements IStudyRepository {
   async createSlug(
     data: Study,
-    userRepository: IUserRepository
   ): Promise<string> {
-    const authorName = await userRepository.FindUserById(data.author);
-    const authorSlug = authorName.name
+    const authorSlug = data.authorName
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9]+/g, "-")
@@ -53,8 +52,8 @@ export class MockStudyRepository implements IStudyRepository {
     return readingTime;
   }
   async create(data: Study): Promise<Study> {
-    const slug = await this.createSlug(data, new MockUserRepository());  
-    const readingTime = await this.setReadingTime(data); 
+    const slug = await this.createSlug(data);  
+    const readingTime = await this.setReadingTime(data.body); 
 
     MockStudies.push({
       ...data,
@@ -64,7 +63,6 @@ export class MockStudyRepository implements IStudyRepository {
 
     return data;
   }
-
   async findStudies(
     offset?: number,
     limit?: number
@@ -72,17 +70,14 @@ export class MockStudyRepository implements IStudyRepository {
     const studies = MockStudies.slice(offset, offset + limit);
     return { studies, length: MockStudies.length };
   }
-
   async findById(id: string): Promise<Study | null> {
     const study = MockStudies.find((study) => study.id === id);
 
     return study || null;
   }
-
   async deleteById(id: string): Promise<void> {
     MockStudies = MockStudies.filter((study) => study.id !== id);
   }
-
   async updateById(id: string, data: Partial<Study>): Promise<Study> {
     const studyIndex = MockStudies.findIndex((study) => study.id === id);
     if (studyIndex === -1) {
