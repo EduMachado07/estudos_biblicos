@@ -9,7 +9,7 @@ function Navbar() {
   return (
     <header className="flex items-center justify-between pt-6">
       <section className="flex gap-10 items-center">
-        <h1 className="font-bold text-2xl">Estudos DPI</h1>
+        <h1 className="font-title text-2xl">Estudos DPI</h1>
         {/* <nav>
               <ul className="flex gap-4">
                 <NavLink to="">Estudos</NavLink>

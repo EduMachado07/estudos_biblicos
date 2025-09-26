@@ -11,7 +11,7 @@ export const StudyCardRoot = ({ children, slug }: IStudyCardRootProps) => {
     <NavLink
       to={slug}
       //   key={index}
-      className="border rounded-sm overflow-hidden"
+      className="border rounded-sm overflow-hidden shadow-md"
     >
       {children}
     </NavLink>

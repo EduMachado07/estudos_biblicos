@@ -3,6 +3,7 @@ interface IStudyCardDetailsProps {
   title: string;
   description: string;
   author: string;
+  tag: string;
   //   slug: string;
   createdAt?: string;
 }
@@ -28,14 +29,24 @@ export const StudyCardDetails = ({
   description,
   author,
   createdAt,
+  tag,
 }: IStudyCardDetailsProps) => {
   return (
-    <section className="p-3 flex flex-col gap-1">
-      <h1 className="capitalize font-bold">{title}</h1>
-      <p>{description}</p>
-      <hr />
-      <h3 className="font-semibold self-end">{author}</h3>
-      <p className="self-end">{formatDate(createdAt)}</p>
+    <section className="h-52 p-4 flex flex-col justify-between bg-[#fafafa]">
+      <div className="flex flex-col gap-2">
+        <h1 className="capitalize font-title text-xl">{title}</h1>
+        <p className="font-body line-clamp-4">{description}</p>
+      </div>
+      <div className="">
+        <hr />
+        <div className="flex justify-between mt-1.5">
+          <p className="font-body text-sm py-1 px-2 bg-amber-300/70 h-fit rounded-sm">{tag}</p>
+          <div className="flex flex-col gap-2">
+            <h3 className="font-title text-base self-end">{author}</h3>
+            <p className="self-end font-body -mt-1">{formatDate(createdAt)}</p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

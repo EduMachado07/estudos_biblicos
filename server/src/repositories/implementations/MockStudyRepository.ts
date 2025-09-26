@@ -1,21 +1,7 @@
 import { Study } from "../../entities/Study";
 import { IStudyRepository } from "../IStudyRepository";
 import { BadRequest } from "../IErrorRepository";
-import { MockUserRepository } from "./MockUserRepository";
-import { IUserRepository } from "../IUserRepository";
-
-export let MockStudies: Study[] = [
-  new Study({
-    title: "Estudo sobre TypeScript",
-    description: "Um estudo detalhado sobre TypeScript.",
-    thumbnailId: "thumb1",
-    thumbnailUrl: "http://example.com/thumb1.jpg",
-    body: '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Conteúdo do estudo sobre TypeScript."}]}]}',
-    authorId: "user1",
-    authorName: "Alice",
-    tag: "Cura",
-  }),
-];
+import { MockStudies } from "../mock/MockStudies";
 
 export class MockStudyRepository implements IStudyRepository {
   async createSlug(
