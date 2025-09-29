@@ -1,0 +1,60 @@
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  // FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { NavLink } from "react-router";
+
+export const LoginView = () => {
+  const form = useForm();
+
+  return (
+    <>
+      <main className="md:w-full h-screen flex justify-center items-center">
+        <section className="w-1/4 flex flex-col gap-6">
+          <Form {...form}>
+            <h1 className="font-title text-2xl">Login</h1>
+            {/* email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Seu email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* password */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Senha</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Sua senha" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Entrar</Button>
+            <hr />
+            <NavLink to='forgot-password' className="self-center">Esqueci a minha senha.</NavLink>
+          </Form>
+        </section>
+      </main>
+    </>
+  );
+};

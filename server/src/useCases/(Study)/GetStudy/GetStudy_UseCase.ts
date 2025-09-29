@@ -19,7 +19,7 @@ export class GetStudyUseCase {
     return {
       ...data,
       length,
-      data: studies,
+      data:studies,
       next:
         nextOffset < length
           ? `/study?offset=${nextOffset}&limit=${data.limit}`

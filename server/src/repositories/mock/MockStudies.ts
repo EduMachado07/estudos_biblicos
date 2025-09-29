@@ -17,7 +17,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user1",
     authorName: "Alice",
-    tag: "Programação",
+    tag: "Salvação",
   }),
 
   new Study({
@@ -39,7 +39,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user2",
     authorName: "Bruno",
-    tag: "Frontend",
+    tag: "Salvação",
   }),
 
   new Study({
@@ -58,7 +58,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user3",
     authorName: "Carla",
-    tag: "Banco de Dados",
+    tag: "Espírito Santo",
   }),
 
   new Study({
@@ -81,7 +81,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user4",
     authorName: "Diego",
-    tag: "Backend",
+    tag: "Espírito Santo",
   }),
 
   new Study({
@@ -99,7 +99,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user5",
     authorName: "Elisa",
-    tag: "API",
+    tag: "Cura",
   }),
 
   new Study({
@@ -121,7 +121,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user1",
     authorName: "Alice",
-    tag: "Arquitetura",
+    tag: "Cura",
   }),
 
   new Study({
@@ -139,7 +139,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user2",
     authorName: "Bruno",
-    tag: "DevOps",
+    tag: "Apocalipse",
   }),
 
   new Study({
@@ -157,7 +157,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user3",
     authorName: "Carla",
-    tag: "Backend",
+    tag: "Apocalipse",
   }),
 
   new Study({
@@ -175,7 +175,7 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user4",
     authorName: "Diego",
-    tag: "Frontend",
+    tag: "Família",
   }),
 
   new Study({
@@ -199,6 +199,6 @@ export let MockStudies: Study[] = [
     }),
     authorId: "user5",
     authorName: "Elisa",
-    tag: "Arquitetura",
+    tag: "Família",
   }),
 ];

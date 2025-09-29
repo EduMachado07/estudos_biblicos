@@ -20,6 +20,10 @@
   font-family: 'General Sans', sans-serif;
   font-weight: 400;
 }
+.font-body-medium {
+  font-family: 'General Sans', sans-serif;
+  font-weight: 500;
+}
 
 
 @theme inline {

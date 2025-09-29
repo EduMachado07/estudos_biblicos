@@ -2,9 +2,14 @@ import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import type { useGetStudiesModel } from "@/app/getStudies/getStudies.model";
+import { NavLink } from "react-router";
 
-function Navbar() {
+type NavbarProps = ReturnType<typeof useGetStudiesModel>;
+
+export const Navbar = (props: NavbarProps) => {
   const [widthSearch, setWidthSearch] = useState<boolean>(false);
+  const { setSearchTerm, searchTerm } = props;
 
   return (
     <header className="flex items-center justify-between pt-6">
@@ -44,12 +49,18 @@ function Navbar() {
             className={`pl-9 transition-all duration-300 ${
               widthSearch ? "w-100" : "w-40"
             }`}
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+            }}
             onFocus={() => setWidthSearch(true)}
             onBlur={() => setWidthSearch(false)}
           />
         </div>
 
-        <Button>Criar Estudo</Button>
+        <NavLink to="/login">
+          <Button>Criar Estudo</Button>
+        </NavLink>
       </section>
       <section className="md:hidden flex gap-4 items-center">
         <Search className="text-zinc-400" size={20} />
@@ -59,5 +70,4 @@ function Navbar() {
       </section>
     </header>
   );
-}
-export default Navbar;
+};
