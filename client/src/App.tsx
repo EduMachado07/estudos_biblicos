@@ -1,5 +1,5 @@
-import { useGetStudiesModel } from "./app/getStudies/getStudies.model";
-import { GetStudiesPage } from "./app/getStudies/page";
+import { useGetStudiesModel } from "./app/(Studies)/get/getStudies.model";
+import { GetStudiesPage } from "./app/(Studies)/get/page";
 import Footer from "./components/Footer";
 import { Navbar } from "./components/Navbar";
 

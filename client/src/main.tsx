@@ -2,9 +2,11 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import App from "./App";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import App from "./App";
 import { LoginPage } from "./app/login/page";
+import { CreateStudyPage } from "./app/(Studies)/create/page";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +18,10 @@ const routes = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/create",
+    element: <CreateStudyPage />,
   },
 ]);
 

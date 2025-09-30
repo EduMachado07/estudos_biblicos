@@ -2,7 +2,7 @@ import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import type { useGetStudiesModel } from "@/app/getStudies/getStudies.model";
+import type { useGetStudiesModel } from "@/app/(Studies)/get/getStudies.model";
 import { NavLink } from "react-router";
 
 type NavbarProps = ReturnType<typeof useGetStudiesModel>;
