@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { CloudUpload } from "lucide-react";
 import { useRef, useState } from "react";
+import { TipTapEditor } from "@/components/TipTapEditor";
 
 export const CreateStudiesView = () => {
   const form = useForm();
@@ -133,6 +134,7 @@ export const CreateStudiesView = () => {
 
             {/* body */}
             {/* componente TipTap */}
+            <TipTapEditor />
 
             {/* tag */}
             <FormField

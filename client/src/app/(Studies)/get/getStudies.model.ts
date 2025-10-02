@@ -1,32 +1,46 @@
-import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { IStudies, ITagFilters } from "./getStudies.type";
 import { useMemo, useState } from "react";
+import type { IGetStudyAllService } from "@/service/IStudyService";
 
 interface IStudiesResponse {
   data: IStudies[];
-  next?: string;
-  previous?: string;
+  next?: { offset: number; limit: number } | null;
+  previous?: { offset: number; limit: number } | null;
 }
 
-export const useGetStudiesModel = () => {
+type GetStudiesModelProps = {
+  getAllStudiesService: IGetStudyAllService;
+};
+
+export const useGetStudiesModel = ({
+  getAllStudiesService,
+}: GetStudiesModelProps) => {
   const [selectedTag, setSelectedTag] = useState<string>("Todas as tags");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const fetchStudies = async ({
     pageParam,
   }: {
-    pageParam: string;
+    pageParam: { offset?: number; limit?: number };
   }): Promise<IStudiesResponse> => {
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // simula delay
+    const limit = pageParam.limit ?? 9;
+    // await new Promise((resolve) => setTimeout(resolve, 1000)); // simula delay
     // throw new Error("Erro ao buscar estudos"); // simula erro
 
-    const res = await axios.get("http://localhost:3333" + pageParam);
-    // console.log(res.data.studies.data);
+    const res = await getAllStudiesService.exec(
+      pageParam.offset,
+      pageParam.limit
+    );
+    
     return {
-      data: res.data.studies.data,
-      next: res.data.studies.next,
-      previous: res.data.studies.previous,
+      data: res.studies,
+      next:
+        res.next !== null ? { offset: res.next, limit } : null,
+      // previous:
+      //   res.previous !== null
+      //     ? { offset: res.previous, limit: pageParam.limit }
+      //     : null,
     };
   };
 
@@ -34,7 +48,7 @@ export const useGetStudiesModel = () => {
     useInfiniteQuery({
       queryKey: ["studies"],
       queryFn: ({ pageParam }) => fetchStudies({ pageParam }),
-      initialPageParam: "/study?limit=9",
+      initialPageParam: { offset: 0, limit: 9 },
       getNextPageParam: (lastPage) => lastPage.next || undefined,
     });
 
@@ -100,7 +114,7 @@ export const useGetStudiesModel = () => {
   ];
 
   return {
-    status, // loading/error/success
+    status,
     selectedTag,
     setSelectedTag,
     searchTerm,

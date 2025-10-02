@@ -19,15 +19,9 @@ export class GetStudyUseCase {
     return {
       ...data,
       length,
-      data:studies,
-      next:
-        nextOffset < length
-          ? `/study?offset=${nextOffset}&limit=${data.limit}`
-          : null,
-      previous:
-        currentOffset > 0
-          ? `/study?offset=${prevOffset}&limit=${data.limit}`
-          : null,
+      data: studies,
+      next: nextOffset < length ? nextOffset : null,
+      previous: currentOffset > 0 ? prevOffset : null,
     };
   }
 }
