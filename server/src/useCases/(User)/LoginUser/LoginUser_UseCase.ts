@@ -19,22 +19,24 @@ export class LoginUserUseCase {
       throw new NotFound("Ops! Usuário não encontrado em nosso sistema");
     }
 
-    // const isPasswordValid = await bcrypt.compare(
-    //   data.password,
-    //   userAlreadyExists.password
-    // );
+    const isPasswordValid = await bcrypt.compare(
+      data.password,
+      userAlreadyExists.password
+    );
 
-    // if (!isPasswordValid) {
-    //   throw new Unauthorized("Senha inválida");
-    // }
+    if (!isPasswordValid) {
+      throw new Unauthorized("Senha inválida");
+    }
 
     const accessToken = await this.tokenRepository.signAccess({
       id: userAlreadyExists.id,
+      name: userAlreadyExists.name,
       email: userAlreadyExists.email,
       role: userAlreadyExists.role,
     });
     const refreshToken = await this.tokenRepository.signRefresh({
       id: userAlreadyExists.id,
+      name: userAlreadyExists.name,
       email: userAlreadyExists.email,
       role: userAlreadyExists.role,
     });

@@ -1,5 +1,7 @@
+import { useCreateStudiesModel } from "./createStudies.model";
 import { CreateStudiesView } from "./createStudies.view";
 
 export const CreateStudyPage = () => {
-  return <CreateStudiesView />;
+  const methods = useCreateStudiesModel()
+  return <CreateStudiesView {...methods}/>;
 };

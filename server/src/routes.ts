@@ -31,7 +31,7 @@ router.get("/study/:id", (req: Request, res: Response, next: NextFunction) => {
 router.post(
   "/study",
   upload.single("thumbnail"),
-  authAuthorMiddleware.handle,
+  // authAuthorMiddleware.handle,
   (req: Request, res: Response, next: NextFunction) => {
     return createStudyController.handle(req, res, next);
   }

@@ -17,9 +17,6 @@ export class CreateStudyUseCase {
       data.authorId
     );
 
-    console.log(userAlreadyExists);
-    console.log(userAlreadyExists.name);
-
     if (!userAlreadyExists) {
       throw new NotFound("Ops! Usuário não encontrado em nosso sistema");
     }
@@ -34,8 +31,6 @@ export class CreateStudyUseCase {
       thumbnailUrl: newThumbnail.url,
       thumbnailId: newThumbnail.id,
     });
-
-    console.log('deu certo aqui');
 
     const newStudy = await this.studyRepository.create(study);
 

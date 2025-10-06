@@ -9,49 +9,60 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { NavLink } from "react-router";
+import type { useLoginModel } from "./login.model";
 
-export const LoginView = () => {
-  const form = useForm();
+type LoginViewProps = ReturnType<typeof useLoginModel>;
+
+export const LoginView = (props: LoginViewProps) => {
+  const { form, onSubmit, apiError } = props;
 
   return (
     <>
       <main className="md:w-full h-screen flex justify-center items-center">
-        <section className="w-1/4 flex flex-col gap-6">
+        <section className="w-1/4">
           <Form {...form}>
-            <h1 className="font-title text-2xl">Login</h1>
-            {/* email */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Seu email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full flex flex-col gap-6"
+            >
+              <h1 className="font-title text-2xl">Login</h1>
+              {apiError && (
+                <p className="text-red-500 text-sm font-medium">{apiError}</p>
               )}
-            />
-            {/* password */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Senha</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Sua senha" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Entrar</Button>
-            <hr />
-            <NavLink to='forgot-password' className="self-center">Esqueci a minha senha.</NavLink>
+              {/* email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Seu email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* password */}
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Sua senha" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Entrar</Button>
+              <hr />
+              <p className="self-center font-body-medium">
+                Disponível apenas para pessoas autorizadas
+              </p>
+            </form>
           </Form>
         </section>
       </main>

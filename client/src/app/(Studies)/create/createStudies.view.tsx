@@ -19,16 +19,15 @@ import {
 } from "@/components/ui/select";
 import { CloudUpload } from "lucide-react";
 import { useRef, useState } from "react";
-import { TipTapEditor } from "@/components/TipTapEditor";
+import { TipTapEditor } from "@/components/TipTap/TipTapEditor";
+import type { useCreateStudiesModel } from "./createStudies.model";
 
-export const CreateStudiesView = () => {
-  const form = useForm();
+type CreateStudiesViewProps = ReturnType<typeof useCreateStudiesModel>;
+
+export const CreateStudiesView = (props: CreateStudiesViewProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
-
-  const onSubmit = () => {
-    console.log();
-  };
+  const { onSubmit, form } = props;
 
   return (
     <>
@@ -46,7 +45,7 @@ export const CreateStudiesView = () => {
                 <FormItem>
                   <FormLabel>Thumbnail</FormLabel>
                   <FormControl>
-                    <>
+                    <div>
                       {/* Preview da imagem */}
                       {preview ? (
                         <div className="relative">
@@ -94,11 +93,8 @@ export const CreateStudiesView = () => {
                           }
                         }}
                       />
-                    </>
+                    </div>
                   </FormControl>
-                  {/* <FormDescription>
-                    Faça upload de uma imagem para ser a thumbnail do estudo.
-                  </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -134,7 +130,24 @@ export const CreateStudiesView = () => {
 
             {/* body */}
             {/* componente TipTap */}
-            <TipTapEditor />
+            <FormField
+              control={form.control}
+              name="body"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Descrição</FormLabel>
+                  <FormControl>
+                    <TipTapEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Escreva o conteúdo do estudo aqui..."
+                    />
+                    {/* <Input placeholder="Descrição breve do estudo" {...field} /> */}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* tag */}
             <FormField
@@ -168,7 +181,7 @@ export const CreateStudiesView = () => {
                 </FormItem>
               )}
             />
-            <Button size={"lg"} type="submit" className="w-fit">
+            <Button size={"lg"} type="submit" className="self-end px-12">
               Criar estudo
             </Button>
           </form>
