@@ -1,7 +1,7 @@
 import z from "zod";
 import { ZodValidationError } from "../../../repositories/IErrorRepository";
 import { NextFunction, Request, Response } from "express";
-import { GetStudyByIdUseCase, GetStudyUseCase } from "./GetStudy_UseCase";
+import { GetStudyBySlugUseCase, GetStudyUseCase } from "./GetStudy_UseCase";
 import { getStudiesSchema } from "./GetStudy_DTO";
 
 export class GetStudyController {
@@ -25,14 +25,14 @@ export class GetStudyController {
     }
   }
 }
-export class GetStudyByIdController {
-  constructor(private getStudyByIdUseCase: GetStudyByIdUseCase) {}
+export class GetStudyBySlugController {
+  constructor(private getStudyBySlugUseCase: GetStudyBySlugUseCase) {}
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = req.params.id;
+      const data = req.params.slug;
 
-      const study = await this.getStudyByIdUseCase.execute(data);
+      const study = await this.getStudyBySlugUseCase.execute(data);
 
       return res
         .status(200)

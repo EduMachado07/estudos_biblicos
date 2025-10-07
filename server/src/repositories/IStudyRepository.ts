@@ -7,6 +7,7 @@ export interface IStudyRepository {
     setReadingTime(body: string): Promise<number>;
     findStudies(offset: number, limit: number): Promise<{ studies: Study[]; length: number }>;
     findById(id: string): Promise<Study | null>;
+    findBySlug(slug: string): Promise<Study | null>;
     updateById(id:string, data: Partial<Study>): Promise<Study>;
     deleteById(id: string): Promise<void>;
 }
