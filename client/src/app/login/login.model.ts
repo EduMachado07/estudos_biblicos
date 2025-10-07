@@ -1,42 +1,57 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SchemaLoginUser, type SchemaLoginUserType } from "./login.schema";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import type { ILoginUserService } from "@/service/IAuthService";
 
-export const useLoginModel = () => {
+type LoginModelProps = {
+  loginUserService: ILoginUserService;
+};
+
+export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
   const form = useForm<SchemaLoginUserType>({
     resolver: zodResolver(SchemaLoginUser),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
-
+  const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
 
   const { mutate } = useMutation<
     string,
-    AxiosError<{ message: string; details: string }>,
+    AxiosError<{ message: string; status: string }>,
     SchemaLoginUserType
   >({
     mutationFn: async (user) => {
-      const { data } = await axios.post("http://localhost:3333/login", user);
+      const { data } = await loginUserService.exec("/login", user);
       return data;
     },
     onError: (error) => {
-      console.log(error);
-      if (error.response?.data?.message) {
-        setApiError(error.response.data.message);
+      // console.log(error);
+      if (error.response?.data?.message || error.response?.status) {
+        setApiError(
+          "Erro:" + error.response?.status + " " + error.response.data.message
+        );
+        setApiError(
+          `Erro ${error.response?.status} - ${error.response.data.message}`
+        );
       } else {
         setApiError("Erro inesperado. Tente novamente.");
       }
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       setApiError(null);
+      navigate("/create");
     },
   });
-  
+
   const onSubmit = (data: SchemaLoginUserType) => {
-    console.log(data);
     setApiError(null);
     mutate(data);
   };
@@ -44,6 +59,6 @@ export const useLoginModel = () => {
   return {
     form,
     onSubmit,
-    apiError
+    apiError,
   };
 };

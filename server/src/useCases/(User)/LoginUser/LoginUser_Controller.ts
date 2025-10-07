@@ -15,14 +15,14 @@ export class LoginUserController {
 
       res.cookie("accessToken", token.accessToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "strict",
         maxAge: 1000 * 60 * 15, // 15 minutos
       });
 
       res.cookie("refreshToken", token.refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        secure: true,
         sameSite: "strict",
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 dias
       });

@@ -19,7 +19,7 @@ export const LoginView = (props: LoginViewProps) => {
   return (
     <>
       <main className="md:w-full h-screen flex justify-center items-center">
-        <section className="w-1/4">
+        <section className="">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -51,7 +51,7 @@ export const LoginView = (props: LoginViewProps) => {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <Input placeholder="Sua senha" {...field} />
+                      <Input type="password" placeholder="Sua senha" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -7,5 +7,5 @@ exec: (
   ) => Promise<void>;
 }
 export interface ILoginUserService {
-  exec: (email: string, password: string) => Promise<string>;
+  exec: (user: {email: string, password: string}) => Promise<string>;
 }

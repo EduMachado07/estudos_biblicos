@@ -1,11 +1,10 @@
 import { AxiosInstance } from "../AxiosInstance";
 import type { ILoginUserService } from "../IAuthService";
 
-export class AuthUserService implements ILoginUserService {
-  async exec(email: string, password: string): Promise<string> {
+export class LoginUserService implements ILoginUserService {
+  async exec(user: {email: string, password: string}): Promise<string> {
     const { data } = await AxiosInstance.post("/login", {
-      email,
-      password,
+      user
     });
 
     return data.token;
