@@ -23,18 +23,20 @@ import { Dot } from "lucide-react";
 const limit: number = 300;
 
 interface ITipTapEditorProps {
-  content: string,
-  onChange: (value: string) => void,
-  placeholder: string,
+  content: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  readonly?: boolean;
 }
 
 export const TipTapEditor = ({
   content,
   onChange,
-  placeholder
-}:
-ITipTapEditorProps) => {
+  placeholder,
+  readonly = false,
+}: ITipTapEditorProps) => {
   const editor = useEditor({
+    editable: !readonly,
     extensions: [
       TextStyleKit,
       Document,
@@ -57,16 +59,18 @@ ITipTapEditorProps) => {
         levels: [1, 2, 3],
       }),
     ],
-    content: placeholder,
+    content: content || `<p>${placeholder}</p>`,
     editorProps: {
       attributes: {
         class: "prose prose-sm max-w-none focus:outline-none p-4 min-h-96",
       },
     },
     onUpdate: ({ editor }) => {
-    const html = editor.getHTML();
-    onChange(html);
-  },
+      if (!readonly && onChange) {
+        const html = editor.getHTML();
+        onChange(html);
+      }
+    },
     shouldRerenderOnTransaction: true,
     immediatelyRender: true,
   });
@@ -83,14 +87,18 @@ ITipTapEditorProps) => {
     <section>
       {/* editor */}
       <div className="w-full border rounded-md">
-        <div className="border-b p-2 flex gap-1">
-          <ToolBar editor={editor} />
-        </div>
+        {!readonly && (
+          <div className="border-b p-2 flex gap-1">
+            <ToolBar editor={editor} />
+          </div>
+        )}
         <EditorContent editor={editor} />
-      </div>
-      {/* counter */}
-      <div className="mt-1 w-full flex gap-1 justify-end font-semibold">
-        {charactersCount} / {limit} caracteres <Dot /> {wordsCount} palavras
+        {/* counter */}
+        {!readonly && (
+          <div className="border-t py-2 pr-4 w-full flex gap-1 justify-end font-semibold">
+            {charactersCount} / {limit} caracteres <Dot /> {wordsCount} palavras
+          </div>
+        )}
       </div>
     </section>
   );

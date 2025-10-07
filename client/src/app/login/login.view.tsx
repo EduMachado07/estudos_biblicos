@@ -51,7 +51,7 @@ export const LoginView = (props: LoginViewProps) => {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <Input placeholder="Sua senha" {...field} />
+                      <Input type="password" placeholder="Sua senha" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

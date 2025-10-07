@@ -11,6 +11,12 @@ import axios from "axios";
 export const useCreateStudiesModel = () => {
   const form = useForm<SchemaCreateStudiesType>({
     resolver: zodResolver(SchemaCreateStudies),
+    defaultValues: {
+      title: "",
+      description: "",
+      body: "",
+      tag: "",
+    }
   });
 
   const { mutate } = useMutation<
