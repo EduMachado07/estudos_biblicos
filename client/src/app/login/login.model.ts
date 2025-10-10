@@ -19,8 +19,8 @@ export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
       password: "",
     },
   });
-  const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const { mutate } = useMutation<
     string,
@@ -28,7 +28,7 @@ export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
     SchemaLoginUserType
   >({
     mutationFn: async (user) => {
-      const { data } = await loginUserService.exec("/login", user);
+      const data = await loginUserService.exec(user.email, user.password);
       return data;
     },
     onError: (error) => {
@@ -52,6 +52,7 @@ export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
   });
 
   const onSubmit = (data: SchemaLoginUserType) => {
+    // console.log(data)
     setApiError(null);
     mutate(data);
   };

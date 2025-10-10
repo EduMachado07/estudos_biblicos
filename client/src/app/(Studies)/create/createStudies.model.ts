@@ -7,22 +7,30 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import axios from "axios";
+import type { ICreateStudyService } from "@/service/IStudyService";
 
-export const useCreateStudiesModel = () => {
+type CreateStudyModelProps = {
+  createStudyService: ICreateStudyService
+}
+
+export const useCreateStudiesModel = ({createStudyService}: CreateStudyModelProps) => {
   const form = useForm<SchemaCreateStudiesType>({
     resolver: zodResolver(SchemaCreateStudies),
+    defaultValues: {
+      title: "",
+      description: "",
+      body: "",
+      tag: "",
+    }
   });
 
   const { mutate } = useMutation<
-    string,
+    void,
     AxiosError<{ message: string; details: string }>,
     FormData
   >({
-    mutationFn: async (study) => {
-      const { data } = await axios.post("http://localhost:3333/study", study, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      return data;
+    mutationFn: async (formData) => {
+      await createStudyService.exec(formData);
     },
     onError: (error) => {
       // Captura erros da API

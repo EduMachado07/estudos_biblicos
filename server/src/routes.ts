@@ -24,14 +24,14 @@ router.post("/login", (req: Request, res: Response, next: NextFunction) => {
 router.get("/study", (req: Request, res: Response, next: NextFunction) => {
   return getStudyController.handle(req, res, next);
 });
-router.get("/study/:id", (req: Request, res: Response, next: NextFunction) => {
+router.get("/study/:slug", (req: Request, res: Response, next: NextFunction) => {
   return getStudyByIdController.handle(req, res, next);
 });
 
 router.post(
   "/study",
   upload.single("thumbnail"),
-  // authAuthorMiddleware.handle,
+  authAuthorMiddleware.handle,
   (req: Request, res: Response, next: NextFunction) => {
     return createStudyController.handle(req, res, next);
   }

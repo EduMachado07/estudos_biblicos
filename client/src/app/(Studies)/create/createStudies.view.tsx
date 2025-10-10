@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -48,15 +47,23 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     <div>
                       {/* Preview da imagem */}
                       {preview ? (
-                        <div className="relative">
+                        <div className="flex flex-col gap-4 items-end shadow-sm relative border rounded-md overflow-hidden p-4">
                           <img
                             src={preview}
                             alt="Preview"
-                            className="shadow-lg h-100 w-full object-cover rounded-md"
+                            className="shadow-lg h-120 w-full object-cover rounded-md"
                           />
+                          <Button
+                            type="button"
+                            onClick={() => inputRef.current?.click()}
+                            size="sm"
+                            variant={"ghost"}
+                          >
+                            Alterar imagem
+                          </Button>
                         </div>
                       ) : (
-                        <div className="shadow-2xs flex flex-col justify-center gap-1.5 items-center h-100 w-full border-2 border-dashed object-cover rounded-md">
+                        <div className="shadow-2xs flex flex-col justify-center gap-1.5 items-center h-120 w-full border-2 border-dashed object-cover rounded-md">
                           <CloudUpload className="size-18 stroke-blue-600" />
                           <h1 className="font-title capitalize text-lg">
                             imagem do estudo
@@ -67,6 +74,9 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                           <p className="font-body text-sm text-muted-foreground">
                             Formatos aceitos:{" "}
                             <strong>JPEG, PNG, WEBP, AVIF, SVG</strong>
+                          </p>
+                          <p className="font-body text-sm text-muted-foreground">
+                            Recomendado: <strong>1920×1080 ou 1080×1920</strong>
                           </p>
                           <Button
                             type="button"
@@ -135,7 +145,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
               name="body"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Descrição</FormLabel>
+                  <FormLabel>Corpo</FormLabel>
                   <FormControl>
                     <TipTapEditor
                       content={field.value}
@@ -168,7 +178,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     <FormDescription>
                       <SelectContent>
                         <SelectItem value="salvacao">Salvação</SelectItem>
-                        <SelectItem value="espirito-santo">
+                        <SelectItem value="espiritoSanto">
                           Espírito Santo
                         </SelectItem>
                         <SelectItem value="cura">Cura</SelectItem>

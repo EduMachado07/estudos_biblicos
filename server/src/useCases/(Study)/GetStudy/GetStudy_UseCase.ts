@@ -25,11 +25,11 @@ export class GetStudyUseCase {
     };
   }
 }
-export class GetStudyByIdUseCase {
+export class GetStudyBySlugUseCase {
   constructor(private studyRepository: IStudyRepository) {}
 
-  async execute(id: string): Promise<Study | null> {
-    const study = await this.studyRepository.findById(id);
+  async execute(slug: string): Promise<Study | null> {
+    const study = await this.studyRepository.findBySlug(slug);
 
     return study;
   }

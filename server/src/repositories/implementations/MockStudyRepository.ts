@@ -61,6 +61,13 @@ export class MockStudyRepository implements IStudyRepository {
 
     return study || null;
   }
+  async findBySlug(slug: string): Promise<Study | null> {
+    const study = MockStudies.find((study) => study.slug === slug);
+    console.log(slug)
+  
+    return study || null;
+    
+  }
   async deleteById(id: string): Promise<void> {
     MockStudies = MockStudies.filter((study) => study.id !== id);
   }

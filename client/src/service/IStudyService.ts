@@ -1,15 +1,7 @@
 import type { IStudies } from "@/app/(Studies)/get/getStudies.type";
 
 export interface ICreateStudyService {
-  exec: (
-    title: string,
-    description: string,
-    thumbnail: File,
-    tag: string,
-    body: string,
-    authorName: string,
-    authorId: string
-  ) => Promise<void>;
+  exec: (formData: FormData) => Promise<void>;
 }
 
 export interface IGetStudyAllService {

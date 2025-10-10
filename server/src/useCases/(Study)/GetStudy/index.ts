@@ -1,13 +1,13 @@
 import { MockStudyRepository } from "../../../repositories/implementations/MockStudyRepository";
-import { GetStudyByIdController, GetStudyController } from "./GetStudy_Controller";
-import { GetStudyByIdUseCase, GetStudyUseCase } from "./GetStudy_UseCase";
+import { GetStudyBySlugController, GetStudyController } from "./GetStudy_Controller";
+import { GetStudyBySlugUseCase, GetStudyUseCase } from "./GetStudy_UseCase";
 
 const studyRepository = new MockStudyRepository();
 
 const getStudyUseCase = new GetStudyUseCase(studyRepository);
-const getStudyByIdUseCase = new GetStudyByIdUseCase(studyRepository);
+const getStudyByIdUseCase = new GetStudyBySlugUseCase(studyRepository);
 
 const getStudyController = new GetStudyController(getStudyUseCase);
-const getStudyByIdController = new GetStudyByIdController(getStudyByIdUseCase);
+const getStudyByIdController = new GetStudyBySlugController(getStudyByIdUseCase);
 
 export { getStudyController, getStudyByIdController };

@@ -16,8 +16,6 @@ export class GetStudyAllService implements IGetStudyAllService {
       params: { offset, limit },
     });
 
-    console.log(data)
-
     return {
       studies: data.studies.data,
       next: data.studies.next,

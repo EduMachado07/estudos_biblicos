@@ -1,7 +1,11 @@
+import { LoginUserService } from "@/service/implementations/LoginUserService";
 import { useLoginModel } from "./login.model";
 import { LoginView } from "./login.view";
 
 export const LoginPage = () => {
-  const methods = useLoginModel()
+  const loginUserService = new LoginUserService();
+  const methods = useLoginModel({
+    loginUserService,
+  });
   return <LoginView {...methods} />;
 };
