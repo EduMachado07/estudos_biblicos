@@ -1,31 +1,19 @@
-import { Button } from "../ui/button";
+import { useState } from "react";
 import "./styles.scss";
 import type { Editor } from "@tiptap/react";
 import {
   Bold,
-  Code,
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
   Italic,
-  LineChart,
-  Link,
   Link2,
   Link2Off,
-  List,
-  ListCheck,
-  ListOrdered,
   Minus,
-  Quote,
-  QuoteIcon,
-  Redo,
+  Redo2,
   Strikethrough,
+  TextQuote,
   Underline,
-  Undo,
+  Undo2,
 } from "lucide-react";
 import { Separator } from "../ui/separator";
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -35,6 +23,11 @@ import {
   // DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { HeadingDropdown } from "./HeadingDropdown";
+import { ListDropdown } from "./ListDropdown";
+import { AlignTextDropdown } from "./AlignTextDropdown";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ToolButtonProps {
   disabled?: boolean;
@@ -52,7 +45,7 @@ const ToolBarButton: React.FC<ToolButtonProps> = ({
   title,
 }) => (
   <Button
-    variant={isActive ? "default" : "ghost"}
+    variant={isActive ? "active" : "ghost"}
     size="sm"
     disabled={disabled}
     onClick={onClick}
@@ -82,133 +75,119 @@ export function ToolBar({ editor }: { editor: Editor }) {
   };
 
   return (
-    <div className="flex flex-wrap gap-1">
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        isActive={editor.isActive("bold") ? "is-active" : ""}
-        title={"Bold (Ctrl+B)"}
-      >
-        <Bold />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        isActive={editor.isActive("italic") ? "is-active" : ""}
-        title={"Italic (Ctrl+I)"}
-      >
-        <Italic />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-        isActive={editor.isActive("underline") ? "is-active" : ""}
-        title={"Underline (Ctrl+U)"}
-      >
-        <Underline />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        isActive={editor.isActive("strike") ? "is-active" : ""}
-        title={"Strike (Ctrl+Shift+S)"}
-      >
-        <Strikethrough />
-      </ToolBarButton>
+    <ScrollArea>
+      <div className="flex flex-wrap gap-1 max-w-max">
+        <HeadingDropdown editor={editor} />
 
-      <Separator orientation="vertical" />
+        <ListDropdown editor={editor} />
 
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        isActive={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
-        title={"Heading 1 (Ctrl+Alt+1)"}
-      >
-        <Heading1 />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        isActive={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
-        title={"Heading 2 (Ctrl+Alt+2)"}
-      >
-        <Heading2 />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        isActive={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
-        title={"Heading 3 (Ctrl+Alt+3)"}
-      >
-        <Heading3 />
-      </ToolBarButton>
+        <AlignTextDropdown editor={editor} />
 
-      <Separator orientation="vertical" />
+        <Separator orientation="vertical" />
 
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        isActive={editor.isActive("blockquote") ? "is-active" : ""}
-        title={"Black Quote (Ctrl+Shift+B)"}
-      >
-        <QuoteIcon />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        isActive={editor.isActive("bulletList") ? "is-active" : ""}
-        title={"Bullet List (Ctrl+Shift+8)"}
-      >
-        <List />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        isActive={editor.isActive("orderedList") ? "is-active" : ""}
-        title={"Ordered List (Ctrl+Shift+8)"}
-      >
-        <ListOrdered />
-      </ToolBarButton>
-      <ToolBarButton
-        onClick={() => editor.chain().focus().setHorizontalRule().run()}
-        // isActive={editor.isActive("orderedList") ? "is-active" : ""}
-        title={"Horizontal Line"}
-      >
-        <Minus />
-      </ToolBarButton>
+        <ToolBarButton
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          isActive={editor.isActive("bold") ? "is-active" : ""}
+          title={"Bold (Ctrl+B)"}
+        >
+          <Bold />
+        </ToolBarButton>
+        <ToolBarButton
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          isActive={editor.isActive("italic") ? "is-active" : ""}
+          title={"Italic (Ctrl+I)"}
+        >
+          <Italic />
+        </ToolBarButton>
+        <ToolBarButton
+          onClick={() => editor.chain().focus().toggleUnderline().run()}
+          isActive={editor.isActive("underline") ? "is-active" : ""}
+          title={"Underline (Ctrl+U)"}
+        >
+          <Underline />
+        </ToolBarButton>
+        <ToolBarButton
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          isActive={editor.isActive("strike") ? "is-active" : ""}
+          title={"Strike (Ctrl+Shift+S)"}
+        >
+          <Strikethrough />
+        </ToolBarButton>
 
-      <Separator orientation="vertical" />
+        <Separator orientation="vertical" />
 
-      <ToolBarButton
-        onClick={() => {
-          // Se já for um link, remove
-          if (editor.isActive("link")) {
-            editor.chain().focus().unsetLink().run();
-            return;
-          }
+        <ToolBarButton
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          isActive={editor.isActive("blockquote") ? "is-active" : ""}
+          title={"Black Quote (Ctrl+Shift+B)"}
+        >
+          <TextQuote />
+        </ToolBarButton>
 
-          // Caso contrário, abre o modal para inserir
-          setIsDialogOpen(true);
-        }}
-        isActive={editor.isActive("link") ? "is-active" : ""}
-        title={editor.isActive("link") ? "Remove link" : "Add link"}
-      >
-        {editor.isActive("link") ? <Link2Off /> : <Link2 />}
-      </ToolBarButton>
+        <ToolBarButton
+          onClick={() => editor.chain().focus().setHorizontalRule().run()}
+          // isActive={editor.isActive("orderedList") ? "is-active" : ""}
+          title={"Horizontal Line"}
+        >
+          <Minus />
+        </ToolBarButton>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        {/* <DialogTrigger>Open</DialogTrigger> */}
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add Link</DialogTitle>
-            <DialogDescription>
-              Insira a URL para criar um link
-            </DialogDescription>
-          </DialogHeader>
+        <ToolBarButton
+          onClick={() => {
+            if (editor.isActive("link")) {
+              editor.chain().focus().unsetLink().run();
+              return;
+            }
 
-          <Input
-            type="url"
-            placeholder="https://example.com"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            autoFocus
-          />
-          <Button variant={"outline"} onClick={() => setIsDialogOpen(false)}>
-            Cancelar
-          </Button>
-          <Button onClick={AddLink}>Add Link</Button>
-        </DialogContent>
-      </Dialog>
-    </div>
+            setIsDialogOpen(true);
+          }}
+          isActive={editor.isActive("link") ? "is-active" : ""}
+          title={editor.isActive("link") ? "Remove link" : "Add link"}
+        >
+          {editor.isActive("link") ? <Link2Off /> : <Link2 />}
+        </ToolBarButton>
+
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          {/* <DialogTrigger>Open</DialogTrigger> */}
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add Link</DialogTitle>
+              <DialogDescription>
+                Insira a URL para criar um link
+              </DialogDescription>
+            </DialogHeader>
+
+            <Input
+              type="url"
+              placeholder="https://example.com"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              autoFocus
+            />
+            <Button variant={"outline"} onClick={() => setIsDialogOpen(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={AddLink}>Add Link</Button>
+          </DialogContent>
+        </Dialog>
+
+        <Separator orientation="vertical" />
+
+        <ToolBarButton
+          onClick={() => editor.chain().focus().undo().run()}
+          isActive={editor.isActive("undo") ? "is-active" : ""}
+          title={"Undo (Ctrl+Z)"}
+        >
+          <Undo2 />
+        </ToolBarButton>
+        <ToolBarButton
+          onClick={() => editor.chain().focus().redo().run()}
+          isActive={editor.isActive("redo") ? "is-active" : ""}
+          title={"Redo (Ctrl+Y)"}
+        >
+          <Redo2 />
+        </ToolBarButton>
+      </div>
+    </ScrollArea>
   );
 }

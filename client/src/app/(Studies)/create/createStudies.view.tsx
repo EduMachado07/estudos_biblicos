@@ -30,7 +30,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
 
   return (
     <>
-      <main className="py-10 w-full min-h-screen px-[18vw] flex justify-center items-center">
+      <main className="bg-[#efefef] py-10 px-[4vw] lg:px-[18vw] w-full min-h-screen flex justify-center items-center">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -47,11 +47,11 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     <div>
                       {/* Preview da imagem */}
                       {preview ? (
-                        <div className="flex flex-col gap-4 items-end shadow-sm relative border rounded-md overflow-hidden p-4">
+                        <div className="flex flex-col gap-2 md:gap-4 p-2 md:p-4 items-end shadow-sm relative border rounded-md overflow-hidden">
                           <img
                             src={preview}
                             alt="Preview"
-                            className="shadow-lg h-120 w-full object-cover rounded-md"
+                            className="shadow-lg md:h-120 h-50 w-full object-cover rounded-md"
                           />
                           <Button
                             type="button"
@@ -63,7 +63,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                           </Button>
                         </div>
                       ) : (
-                        <div className="shadow-2xs flex flex-col justify-center gap-1.5 items-center h-120 w-full border-2 border-dashed object-cover rounded-md">
+                        <div className="shadow-2xs flex flex-col justify-center gap-1.5 items-center h-120 w-full border-zinc-300 border-2 border-dashed object-cover rounded-md">
                           <CloudUpload className="size-18 stroke-blue-600" />
                           <h1 className="font-title capitalize text-lg">
                             imagem do estudo
@@ -171,7 +171,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[200px]">
+                      <SelectTrigger className="md:w-[200px] w-2/2">
                         <SelectValue placeholder="Identificador" />
                       </SelectTrigger>
                     </FormControl>
@@ -191,7 +191,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                 </FormItem>
               )}
             />
-            <Button size={"lg"} type="submit" className="self-end px-12">
+            <Button size={"lg"} type="submit" className="self-end md:px-12 w-1/2">
               Criar estudo
             </Button>
           </form>

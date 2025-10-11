@@ -15,10 +15,13 @@ import Blockquote from "@tiptap/extension-blockquote";
 import Heading from "@tiptap/extension-heading";
 import Link from "@tiptap/extension-link";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
+import { UndoRedo } from "@tiptap/extensions";
 import { BulletList, OrderedList, ListItem } from "@tiptap/extension-list";
+import TextAlign from "@tiptap/extension-text-align";
 import { CharacterCount } from "@tiptap/extensions";
 import "prosemirror-view/style/prosemirror.css";
 import { Dot } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const limit: number = 300;
 
@@ -52,11 +55,15 @@ export const TipTapEditor = ({
       ListItem,
       HorizontalRule,
       Link,
+      UndoRedo,
       CharacterCount.configure({
         limit,
       }),
       Heading.configure({
         levels: [1, 2, 3],
+      }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
       }),
     ],
     content: content || `<p>${placeholder}</p>`,
@@ -88,15 +95,15 @@ export const TipTapEditor = ({
       {/* editor */}
       <div className="w-full border rounded-md">
         {!readonly && (
-          <div className="border-b p-2 flex gap-1">
+          <div className="border-b p-0 overflow-x-auto">
             <ToolBar editor={editor} />
           </div>
         )}
         <EditorContent editor={editor} />
         {/* counter */}
         {!readonly && (
-          <div className="border-t py-2 pr-4 w-full flex gap-1 justify-end font-semibold">
-            {charactersCount} / {limit} caracteres <Dot /> {wordsCount} palavras
+          <div className="border-t py-1 md:py-2 pr-2 md:pr-4 w-full flex gap-1 justify-end font-semibold text-sm md:text-base">
+            {charactersCount} caracteres <Dot /> {wordsCount} palavras
           </div>
         )}
       </div>
