@@ -10,6 +10,7 @@ import {
 import { deleteStudyController } from "./useCases/(Study)/DeleteStudy";
 import { updateStudyController } from "./useCases/(Study)/UpdateStudy";
 import { authAuthorMiddleware } from "./useCases/(Auth)/AuthAuthor";
+import { refreshTokenController } from "./useCases/(Auth)/RefreshToken";
 
 const router = express.Router();
 
@@ -18,6 +19,9 @@ router.post("/register", (req: Request, res: Response, next: NextFunction) => {
 });
 router.post("/login", (req: Request, res: Response, next: NextFunction) => {
   return loginUserController.handle(req, res, next);
+});
+router.post("/refresh", (req: Request, res: Response) => {
+  return refreshTokenController.handle(req, res);
 });
 // get all studies
 // ?offset&limit
