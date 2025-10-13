@@ -47,11 +47,11 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     <div>
                       {/* Preview da imagem */}
                       {preview ? (
-                        <div className="flex flex-col gap-2 md:gap-4 p-2 md:p-4 items-end shadow-sm relative border rounded-md overflow-hidden">
+                        <div className="flex flex-col gap-2 md:gap-4 p-2 md:p-6 items-end shadow-sm relative border rounded-md overflow-hidden">
                           <img
                             src={preview}
                             alt="Preview"
-                            className="shadow-lg md:h-120 h-50 w-full object-cover rounded-md"
+                            className="shadow-lg md:h-110 h-50 w-full object-cover rounded-md"
                           />
                           <Button
                             type="button"
@@ -191,7 +191,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                 </FormItem>
               )}
             />
-            <Button size={"lg"} type="submit" className="self-end md:px-12 w-1/2">
+            <Button size={"lg"} type="submit" className="self-end md:px-12 max-md:w-1/2">
               Criar estudo
             </Button>
           </form>

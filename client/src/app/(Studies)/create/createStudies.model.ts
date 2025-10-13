@@ -6,7 +6,6 @@ import {
 } from "./createStudies.schema";
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import axios from "axios";
 import type { ICreateStudyService } from "@/service/IStudyService";
 
 type CreateStudyModelProps = {

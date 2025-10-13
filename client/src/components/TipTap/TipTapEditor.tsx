@@ -21,9 +21,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { CharacterCount } from "@tiptap/extensions";
 import "prosemirror-view/style/prosemirror.css";
 import { Dot } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area"
-
-const limit: number = 300;
+// import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ITipTapEditorProps {
   content: string;
@@ -57,7 +55,7 @@ export const TipTapEditor = ({
       Link,
       UndoRedo,
       CharacterCount.configure({
-        limit,
+        // limit,
       }),
       Heading.configure({
         levels: [1, 2, 3],
@@ -93,9 +91,9 @@ export const TipTapEditor = ({
   return (
     <section>
       {/* editor */}
-      <div className="w-full border rounded-md">
+      <div className="max-w-full border rounded-md">
         {!readonly && (
-          <div className="border-b p-0 overflow-x-auto">
+          <div className="border-b p-2 flex">
             <ToolBar editor={editor} />
           </div>
         )}

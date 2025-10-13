@@ -36,7 +36,7 @@
     font-size: 1.4rem;
     // font-weight: 600;
   }
-  
+
   h2 {
     font-size: 1.2rem;
     // font-weight: 500;
@@ -71,6 +71,11 @@
 .ProseMirror {
   /* Reset básico */
   outline: none;
+  width: 100%;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
 
   /* Listas */
   ul {

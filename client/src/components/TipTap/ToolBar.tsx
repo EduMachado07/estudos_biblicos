@@ -27,7 +27,7 @@ import { Button } from "../ui/button";
 import { HeadingDropdown } from "./HeadingDropdown";
 import { ListDropdown } from "./ListDropdown";
 import { AlignTextDropdown } from "./AlignTextDropdown";
-import { ScrollArea } from "@/components/ui/scroll-area"
+// import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ToolButtonProps {
   disabled?: boolean;
@@ -75,15 +75,14 @@ export function ToolBar({ editor }: { editor: Editor }) {
   };
 
   return (
-    <ScrollArea>
-      <div className="flex flex-wrap gap-1 max-w-max">
+      <div className="flex flex-wrap md:gap-1.5">
         <HeadingDropdown editor={editor} />
 
         <ListDropdown editor={editor} />
 
         <AlignTextDropdown editor={editor} />
 
-        <Separator orientation="vertical" />
+        <Separator orientation="vertical" className="max-md:hidden" />
 
         <ToolBarButton
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -114,7 +113,7 @@ export function ToolBar({ editor }: { editor: Editor }) {
           <Strikethrough />
         </ToolBarButton>
 
-        <Separator orientation="vertical" />
+        <Separator className="max-md:hidden" orientation="vertical" />
 
         <ToolBarButton
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
@@ -171,7 +170,7 @@ export function ToolBar({ editor }: { editor: Editor }) {
           </DialogContent>
         </Dialog>
 
-        <Separator orientation="vertical" />
+        <Separator className="max-md:hidden" orientation="vertical" />
 
         <ToolBarButton
           onClick={() => editor.chain().focus().undo().run()}
@@ -188,6 +187,5 @@ export function ToolBar({ editor }: { editor: Editor }) {
           <Redo2 />
         </ToolBarButton>
       </div>
-    </ScrollArea>
   );
 }
