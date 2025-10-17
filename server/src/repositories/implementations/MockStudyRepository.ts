@@ -5,15 +5,15 @@ import { MockStudies } from "../mock/MockStudies";
 
 export class MockStudyRepository implements IStudyRepository {
   async createSlug(
-    data: Study,
+    author: string, title: string
   ): Promise<string> {
-    const authorSlug = data.authorName
+    const authorSlug = author
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
 
-    const titleSlug = data.title
+    const titleSlug = title
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9]+/g, "-")
@@ -28,9 +28,9 @@ export class MockStudyRepository implements IStudyRepository {
       version++;
     }
 
-    data.slug = slug;
+    slug = slug;
 
-    return data.slug;
+    return slug;
   }
   async setReadingTime(body: string): Promise<number> {
     const words = body.trim().split(/\s+/).length; // conta palavras
@@ -38,13 +38,9 @@ export class MockStudyRepository implements IStudyRepository {
     return readingTime;
   }
   async create(data: Study): Promise<Study> {
-    const slug = await this.createSlug(data);  
-    const readingTime = await this.setReadingTime(data.body); 
 
     MockStudies.push({
       ...data,
-      slug,
-      readingTime
     });
 
     return data;

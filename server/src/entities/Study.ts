@@ -21,18 +21,15 @@ export class Study {
   constructor(
     props: Omit<
       Study,
-      "id" | "slug" | "createdAt" | "updatedAt" | "readingTime"
+      "id" | "createdAt" | "updatedAt"
     >,
     id?: string,
     createdAt?: Date,
     updatedAt?: Date,
-    slug?: string,
-    readingTime?: number,
   ) {
     Object.assign(this, props);
 
     this.id = id ?? uuidv4();
-    this.slug = slug ?? nanoid();
     this.createdAt = createdAt ?? new Date();
     this.updatedAt = updatedAt ?? new Date();
   }

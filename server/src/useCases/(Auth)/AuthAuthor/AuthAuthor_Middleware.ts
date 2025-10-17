@@ -20,7 +20,7 @@ export class AuthAuthorMiddleware {
 
       const { id, role } = await this.tokenRepository.verifyAccess(accessToken);
 
-      if (role !== Role.AUTHOR) {
+      if (role === Role.READER) {
         throw new Unauthorized("Acesso negado. Permissão insuficiente.");
       }
 

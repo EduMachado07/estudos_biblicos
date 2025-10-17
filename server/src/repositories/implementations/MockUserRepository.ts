@@ -1,9 +1,6 @@
 import { Role, User } from "../../entities/User";
 import { IUserRepository } from "../IUserRepository";
 
-// A classe representa um repositorio de exemplo.
-// Pode interagir com banco de dados ou APIs.
-
 export let MockUser: User[] = [];
 
 export class MockUserRepository implements IUserRepository {
