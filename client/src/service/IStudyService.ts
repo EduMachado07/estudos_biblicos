@@ -16,7 +16,7 @@ export interface IGetStudyAllService {
   }>;
 }
 
-export interface IGetStudyByIdService {
+export interface IGetStudyBySlugService {
   exec: (id: string) => Promise<IStudies>;
 }
 export interface IDeleteStudyService {

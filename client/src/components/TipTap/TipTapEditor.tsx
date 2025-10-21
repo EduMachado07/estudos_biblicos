@@ -25,7 +25,7 @@ import { Dot } from "lucide-react";
 
 interface ITipTapEditorProps {
   content: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   placeholder?: string;
   readonly?: boolean;
 }
@@ -91,7 +91,7 @@ export const TipTapEditor = ({
   return (
     <section>
       {/* editor */}
-      <div className="max-w-full border rounded-md">
+      <div className={`${!readonly && "border"} max-w-full rounded-md`}>
         {!readonly && (
           <div className="border-b p-2 flex">
             <ToolBar editor={editor} />

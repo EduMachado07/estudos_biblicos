@@ -32,6 +32,8 @@ export class GetStudyBySlugController {
     try {
       const data = req.params.slug;
 
+      console.log(data)
+
       const study = await this.getStudyBySlugUseCase.execute(data);
 
       return res

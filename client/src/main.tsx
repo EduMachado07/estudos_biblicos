@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { LoginPage } from "./app/login/page";
 import { CreateStudyPage } from "./app/(Studies)/create/page";
+import { GetStudyBySlugPage } from "./app/(Studies)/getBySlug/page";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,10 @@ const routes = createBrowserRouter([
   {
     path: "/create",
     element: <CreateStudyPage />,
+  },
+  {
+    path: "/study/*",
+    element: <GetStudyBySlugPage />,
   },
 ]);
 

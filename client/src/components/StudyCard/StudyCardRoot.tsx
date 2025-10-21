@@ -9,7 +9,7 @@ interface IStudyCardRootProps {
 export const StudyCardRoot = ({ children, slug }: IStudyCardRootProps) => {
   return (
     <NavLink
-      to={slug}
+      to={`study/${slug}`}
       //   key={index}
       className="rounded-sm overflow-hidden shadow-md"
     >

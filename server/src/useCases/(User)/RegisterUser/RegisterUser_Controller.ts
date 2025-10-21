@@ -11,9 +11,9 @@ export class RegisterUserController {
     try {
       const data = registerUserSchema.parse(req.body);
 
-      const newUser = await this.registerUserUseCase.execute(data);
+      await this.registerUserUseCase.execute(data);
 
-      return res.status(201).json({ message: "Usuário criado.", newUser });
+      return res.status(201).json({ message: "Usuário criado." });
     } catch (err) {
       if (err instanceof z.ZodError) {
         const zodValidationError = new ZodValidationError(err);

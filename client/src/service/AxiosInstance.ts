@@ -1,14 +1,14 @@
 import axios, { AxiosError } from "axios";
 import type { AxiosRequestConfig } from "axios";
 
-export const AxiosInstance = axios.create({
+export const AxiosInstanceWithRefreshToken = axios.create({
   baseURL: "http://localhost:3333",
   timeout: 15000,
   withCredentials: true, // envia cookies automaticamente
 });
 
 // ✅ Instância separada sem interceptadores
-const AxiosRefreshInstance = axios.create({
+export const AxiosInstance = axios.create({
   baseURL: "http://localhost:3333",
   timeout: 10000,
   withCredentials: true,
@@ -20,7 +20,7 @@ let failedRequestQueue: {
   onFailure: (error: AxiosError) => void;
 }[] = [];
 
-AxiosInstance.interceptors.response.use(
+AxiosInstanceWithRefreshToken.interceptors.response.use(
   (response) => response,
 
   async (error: AxiosError) => {
@@ -43,7 +43,7 @@ AxiosInstance.interceptors.response.use(
 
       try {
         // ✅ Usa instância separada, sem interceptador
-        await AxiosRefreshInstance.post("/refresh");
+        await AxiosInstance.post("/refresh");
 
         // Reexecuta todas as requisições na fila
         failedRequestQueue.forEach((req) => req.onSuccess());
@@ -67,7 +67,7 @@ AxiosInstance.interceptors.response.use(
     // Enquanto refresh acontece, adiciona requisição à fila
     return new Promise((resolve, reject) => {
       failedRequestQueue.push({
-        onSuccess: () => resolve(AxiosInstance(originalConfig)),
+        onSuccess: () => resolve(AxiosInstanceWithRefreshToken(originalConfig)),
         onFailure: (err: AxiosError) => reject(err),
       });
     });

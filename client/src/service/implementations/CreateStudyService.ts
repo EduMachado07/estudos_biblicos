@@ -1,9 +1,9 @@
-import { AxiosInstance } from "../AxiosInstance";
+import { AxiosInstanceWithRefreshToken } from "../AxiosInstance";
 import type { ICreateStudyService } from "../IStudyService";
 
 export class CreateStudyService implements ICreateStudyService {
   async exec(formData: FormData): Promise<void> {
-    await AxiosInstance.post("/study", formData, {
+    await AxiosInstanceWithRefreshToken.post("/study", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

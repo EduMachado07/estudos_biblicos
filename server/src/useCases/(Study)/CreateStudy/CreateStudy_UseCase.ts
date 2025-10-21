@@ -22,7 +22,7 @@ export class CreateStudyUseCase {
     }
 
     const slug = await this.studyRepository.createSlug(
-      userAlreadyExists.id,
+      userAlreadyExists.name,
       data.title
     );
 
