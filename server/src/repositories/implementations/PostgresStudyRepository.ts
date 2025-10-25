@@ -44,7 +44,7 @@ export class PostgresStudyRepository implements IStudyRepository {
         body: data.body,
         authorId: data.authorId,
         tag: data.tag,
-        slug:  data.slug,
+        slug: data.slug,
         readingTime: data.readingTime,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
@@ -77,6 +77,11 @@ export class PostgresStudyRepository implements IStudyRepository {
   async findBySlug(slug: string): Promise<Study | null> {
     const study = await prisma.study.findUnique({
       where: { slug },
+      include: {
+        author: {
+          select: { name: true },
+        },
+      },
     });
     return study;
   }

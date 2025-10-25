@@ -30,9 +30,9 @@ export class GetStudyBySlugController {
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      const data = req.params.slug;
+      const { user, slug } = req.params;
 
-      console.log(data)
+      const data = `${user}/${slug}`
 
       const study = await this.getStudyBySlugUseCase.execute(data);
 

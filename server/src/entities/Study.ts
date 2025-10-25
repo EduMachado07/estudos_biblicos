@@ -12,7 +12,7 @@ export class Study {
   public thumbnailUrl: string;
   public body: string;
   public authorId: string;
-  public authorName: string;
+  // public authorName: string;
   public tag: string;
   public readingTime: number;
   public readonly createdAt: Date;

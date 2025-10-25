@@ -28,7 +28,7 @@ router.post("/refresh", (req: Request, res: Response) => {
 router.get("/study", (req: Request, res: Response, next: NextFunction) => {
   return getStudyController.handle(req, res, next);
 });
-router.get("/study/:slug", (req: Request, res: Response, next: NextFunction) => {
+router.get("/study/:user/:slug", (req: Request, res: Response, next: NextFunction) => {
   return getStudyByIdController.handle(req, res, next);
 });
 

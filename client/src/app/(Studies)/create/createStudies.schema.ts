@@ -12,7 +12,7 @@ export const SchemaCreateStudies = z.object({
   description: z
     .string()
     .min(20, { message: "A descrição deve ter pelo menos 20 caracteres." })
-    .max(200, { message: "A descrição deve ter no máximo 500 caracteres." })
+    // .max(200, { message: "A descrição deve ter no máximo 200 caracteres." })
     .trim(),
   body: z
     .string()

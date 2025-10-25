@@ -24,7 +24,7 @@ import { Dot } from "lucide-react";
 // import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ITipTapEditorProps {
-  content: string;
+  content: string | undefined;
   onChange?: (value: string) => void;
   placeholder?: string;
   readonly?: boolean;

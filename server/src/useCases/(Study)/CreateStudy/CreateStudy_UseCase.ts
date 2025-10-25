@@ -36,7 +36,7 @@ export class CreateStudyUseCase {
       slug,
       readingTime,
       authorId: userAlreadyExists.id,
-      authorName: userAlreadyExists.name,
+      // authorName: userAlreadyExists.name,
       thumbnailUrl: newThumbnail.url,
       thumbnailId: newThumbnail.id,
     });

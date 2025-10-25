@@ -63,7 +63,7 @@ export const GetStudiesView = (props: GetStudiesViewProps) => {
                       title={study.title}
                       tag={study.tag}
                       description={study.description}
-                      author={study.authorName}
+                      author={study.author?.name}
                       createdAt={study.createdAt}
                     />
                   </StudyCard.Root>

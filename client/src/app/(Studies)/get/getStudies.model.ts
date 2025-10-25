@@ -32,11 +32,10 @@ export const useGetStudiesModel = ({
       pageParam.offset,
       pageParam.limit
     );
-    
+
     return {
       data: res.studies,
-      next:
-        res.next !== null ? { offset: res.next, limit } : null,
+      next: res.next !== null ? { offset: res.next, limit } : null,
       // previous:
       //   res.previous !== null
       //     ? { offset: res.previous, limit: pageParam.limit }

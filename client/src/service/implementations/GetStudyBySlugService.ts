@@ -6,6 +6,6 @@ export class GetStudyBySlugService implements IGetStudyBySlugService {
   async exec(slug: string): Promise<IStudies> {
     const { data } = await AxiosInstance.get(`study/${slug}`);
 
-    return data;
+    return data.study;
   }
 }
