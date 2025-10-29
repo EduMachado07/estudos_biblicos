@@ -23,7 +23,7 @@ export class PostgresStudyRepository implements IStudyRepository {
     let version = 2;
 
     while (await prisma.study.findUnique({ where: { slug } })) {
-      slug = `${authorSlug}/${titleSlug}/v${version}`;
+      slug = `${authorSlug}/${titleSlug}-v${version}`;
       version++;
     }
 

@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Toaster } from "@/components/ui/sonner";
 import { CloudUpload } from "lucide-react";
 import { useRef, useState } from "react";
 import { TipTapEditor } from "@/components/TipTap/TipTapEditor";
@@ -177,13 +178,13 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     </FormControl>
                     <FormDescription>
                       <SelectContent>
-                        <SelectItem value="salvacao">Salvação</SelectItem>
-                        <SelectItem value="espiritoSanto">
+                        <SelectItem value="Salvação">Salvação</SelectItem>
+                        <SelectItem value="Espírito Santo">
                           Espírito Santo
                         </SelectItem>
-                        <SelectItem value="cura">Cura</SelectItem>
-                        <SelectItem value="apocalipse">Apocalipse</SelectItem>
-                        <SelectItem value="familia">Família</SelectItem>
+                        <SelectItem value="Cura">Cura</SelectItem>
+                        <SelectItem value="Apocalipse">Apocalipse</SelectItem>
+                        <SelectItem value="Família">Família</SelectItem>
                       </SelectContent>
                     </FormDescription>
                   </Select>
@@ -191,10 +192,16 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                 </FormItem>
               )}
             />
-            <Button size={"lg"} type="submit" className="self-end md:px-12 max-md:w-1/2">
+            <Button
+              size={"lg"}
+              type="submit"
+              className="self-end md:px-12 max-md:w-1/2"
+            >
               Criar estudo
             </Button>
           </form>
+
+          <Toaster />
         </Form>
       </main>
     </>

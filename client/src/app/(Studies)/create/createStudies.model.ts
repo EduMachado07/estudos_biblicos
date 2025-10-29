@@ -7,12 +7,16 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import type { ICreateStudyService } from "@/service/IStudyService";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 type CreateStudyModelProps = {
-  createStudyService: ICreateStudyService
-}
+  createStudyService: ICreateStudyService;
+};
 
-export const useCreateStudiesModel = ({createStudyService}: CreateStudyModelProps) => {
+export const useCreateStudiesModel = ({
+  createStudyService,
+}: CreateStudyModelProps) => {
   const form = useForm<SchemaCreateStudiesType>({
     resolver: zodResolver(SchemaCreateStudies),
     defaultValues: {
@@ -20,8 +24,9 @@ export const useCreateStudiesModel = ({createStudyService}: CreateStudyModelProp
       description: "",
       body: "",
       tag: "",
-    }
+    },
   });
+  const navigate = useNavigate();
 
   const { mutate } = useMutation<
     void,
@@ -31,26 +36,40 @@ export const useCreateStudiesModel = ({createStudyService}: CreateStudyModelProp
     mutationFn: async (formData) => {
       await createStudyService.exec(formData);
     },
+
+    onMutate: () => {
+      toast.loading("Criando estudo...", { id: "create-study" });
+    },
+
     onError: (error) => {
-      // Captura erros da API
       if (error.response) {
-        console.error("Erro da API:", error.response.data.message);
-        console.error("Erro da API:", error.response.data);
+        toast.error("Erro ao criar estudo: " + error.response.data.message, {
+          id: "create-study",
+        });
       } else {
-        console.error("Erro de rede ou outro:", error.message);
+        toast.error("Erro ao criar estudo. Tente novamente.", {
+          id: "create-study",
+        });
       }
     },
-    onSuccess: (data) => console.log(data),
+
+    onSuccess: () => {
+      toast.success("Estudo criado com sucesso!", {
+        id: "create-study",
+        duration: 1500,
+        onAutoClose: () => navigate("/"),
+      });
+    },
   });
 
-  const onSubmit = (data: SchemaCreateStudiesType & {thumbnail: File}) => {
+  const onSubmit = (data: SchemaCreateStudiesType & { thumbnail: File }) => {
     const study = new FormData();
     study.append("thumbnail", data.thumbnail);
     study.append("title", data.title);
     study.append("description", data.description);
     study.append("body", data.body);
     study.append("tag", data.tag);
-    console.log(study);
+
     mutate(study);
   };
 
