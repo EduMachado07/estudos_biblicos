@@ -85,6 +85,24 @@ export class PostgresStudyRepository implements IStudyRepository {
     });
     return study;
   }
+
+  async findStudiesByAuthorId(
+    authorId: string,
+    offset: number,
+    limit: number
+  ): Promise<{ studies: Study[]; length: number }> {
+    const [studies, length] = await Promise.all([
+      prisma.study.findMany({
+        where: { authorId },
+        skip: offset,
+        take: limit,
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.study.count({ where: { authorId } }),
+    ]);
+
+    return { studies, length };
+  }
   async deleteById(id: string): Promise<void> {
     await prisma.study.delete({
       where: { id },

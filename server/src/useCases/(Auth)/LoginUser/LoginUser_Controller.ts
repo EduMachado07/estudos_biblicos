@@ -11,23 +11,23 @@ export class LoginUserController {
     try {
       const data = LoginUserSchema.parse(req.body);
 
-      const token = await this.loginUserUseCase.execute(data);
+      const user = await this.loginUserUseCase.execute(data);
 
-      res.cookie("accessToken", token.accessToken, {
+      res.cookie("accessToken", user.accessToken, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
         maxAge: 1000 * 60 * 15, // 15 minutos
       });
 
-      res.cookie("refreshToken", token.refreshToken, {
+      res.cookie("refreshToken", user.refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 dias
       });
 
-      return res.status(200).json({ message: 'Usuário entrou no sistema.' });
+      return res.status(200).json({ message: 'Usuário entrou no sistema.', author: user.author });
     } catch (err) {
       if (err instanceof z.ZodError) {
         const zodValidationError = new ZodValidationError(err);

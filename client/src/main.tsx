@@ -8,25 +8,37 @@ import App from "./App";
 import { LoginPage } from "./app/login/page";
 import { CreateStudyPage } from "./app/(Studies)/create/page";
 import { GetStudyBySlugPage } from "./app/(Studies)/getBySlug/page";
+import { ProfilePage } from "./pages/profile";
+import { GetStudiesPage } from "./app/(Studies)/get/page";
 
 const queryClient = new QueryClient();
 
 const routes = createBrowserRouter([
   {
     path: "",
-    element: <App />,
+    element: < App />,
+    children: [
+      {
+        path: "/",
+        element: <GetStudiesPage />,
+      },
+      {
+        path: "/create",
+        element: <CreateStudyPage />,
+      },
+      {
+        path: "/study/*",
+        element: <GetStudyBySlugPage />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      },
+    ],
   },
   {
     path: "/login",
     element: <LoginPage />,
-  },
-  {
-    path: "/create",
-    element: <CreateStudyPage />,
-  },
-  {
-    path: "/study/*",
-    element: <GetStudyBySlugPage />,
   },
 ]);
 

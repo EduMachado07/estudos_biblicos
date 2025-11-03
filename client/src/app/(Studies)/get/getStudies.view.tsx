@@ -2,27 +2,60 @@ import { Button } from "@/components/ui/button";
 import type { useGetStudiesModel } from "./getStudies.model";
 import { StudyCard } from "@/components/StudyCard";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { useState } from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 type GetStudiesViewProps = ReturnType<typeof useGetStudiesModel>;
 
 export const GetStudiesView = (props: GetStudiesViewProps) => {
-  const { filteredStudies, tagFilters, selectedTag, setSelectedTag, status } =
-    props;
+  const {
+    filteredStudies,
+    tagFilters,
+    selectedTag,
+    setSelectedTag,
+    status,
+    setSearchTerm,
+    searchTerm,
+  } = props;
+
+  const [widthSearch, setWidthSearch] = useState<boolean>(false);
 
   return (
     <>
       <section className="flex flex-col gap-6 md:gap-8 my-4">
         <main className="flex gap-4 max-lg:flex-col">
           {/* Filtros */}
-          <ScrollArea>
-            <section className="w-fit flex lg:flex-col gap-2 whitespace-nowrap mb-3">
+          <ScrollArea className="">
+            <div className="relative mb-2">
+              <label
+                htmlFor="search"
+                className="absolute left-3 top-1/2 -translate-y-1/2 cursor-pointer"
+              >
+                <Search className="text-zinc-400" size={20} />
+              </label>
+              <Input
+                id="search"
+                type="text"
+                placeholder="Buscar estudo"
+                className="w-full pl-9"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+                onFocus={() => setWidthSearch(true)}
+                onBlur={() => setWidthSearch(false)}
+              />
+            </div>
+
+            <section className="w-fit flex lg:flex-col gap-1 whitespace-nowrap mb-3">
               {tagFilters.map((filter, index) => {
                 const isActive = selectedTag === filter.tag;
                 return (
                   <section
                     key={index}
                     onClick={() => setSelectedTag(filter.tag)}
-                    className={`lg:w-45 gap-2 flex justify-between items-center font-body-medium p-2 rounded-sm transition-all duration-200 cursor-pointer 
+                    className={`lg:w-50 gap-2 flex justify-between items-center font-body-medium p-2 rounded-sm transition-all duration-200 cursor-pointer 
                     ${filter.color} 
                     ${
                       isActive
@@ -37,6 +70,7 @@ export const GetStudiesView = (props: GetStudiesViewProps) => {
                 );
               })}
             </section>
+
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
 
@@ -56,7 +90,7 @@ export const GetStudiesView = (props: GetStudiesViewProps) => {
             {status === "success" && (
               <>
                 {filteredStudies.map((study) => (
-                  <StudyCard.Root key={study.id} slug={study.slug}>
+                  <StudyCard.Root key={study.id} slug={`/study/${study.slug}`}>
                     <StudyCard.Image image={study.thumbnailUrl} />
                     <StudyCard.Details
                       id={study.id!}

@@ -1,4 +1,4 @@
-import type { IStudies } from "@/app/(Studies)/get/getStudies.type";
+import type { IStudies } from "@/lib/IStudies";
 
 export interface ICreateStudyService {
   exec: (formData: FormData) => Promise<void>;
@@ -13,6 +13,19 @@ export interface IGetStudyAllService {
     next: number | null;
     previous: number | null;
     length: number;
+  }>;
+}
+
+export interface IGetStudiesByAuthorService {
+  exec: (
+    offset?: number,
+    limit?: number
+  ) => Promise<{
+    studies: IStudies[];
+    next: number | null;
+    previous: number | null;
+    length: number;
+    author: { name: string; role: string };
   }>;
 }
 

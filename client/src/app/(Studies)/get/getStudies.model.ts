@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import type { IStudies, ITagFilters } from "./getStudies.type";
+import type { IStudies, ITagFilters } from "@/lib/IStudies";
 import { useMemo, useState } from "react";
 import type { IGetStudyAllService } from "@/service/IStudyService";
 

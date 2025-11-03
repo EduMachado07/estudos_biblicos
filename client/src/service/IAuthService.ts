@@ -1,5 +1,5 @@
 export interface IRegisterUserService {
-exec: (
+  exec: (
     name: string,
     email: string,
     password: string,
@@ -7,5 +7,14 @@ exec: (
   ) => Promise<void>;
 }
 export interface ILoginUserService {
-  exec: (email: string, password: string) => Promise<string>;
+  exec: (
+    email: string,
+    password: string
+  ) => Promise<{
+    author: { name: string; role: string };
+  }>;
+}
+
+export interface ILogoutUserService {
+  exec: () => Promise<void>;
 }

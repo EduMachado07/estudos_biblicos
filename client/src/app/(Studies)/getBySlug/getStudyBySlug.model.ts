@@ -1,8 +1,8 @@
 import type { IGetStudyBySlugService } from "@/service/IStudyService";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import type { ITagFilters } from "../get/getStudies.type";
 import { useState } from "react";
+import type { ITagFilters } from "@/lib/IStudies";
 
 type GetStudyModelProps = {
   getStudyBySlugService: IGetStudyBySlugService;

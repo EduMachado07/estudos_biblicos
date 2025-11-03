@@ -31,7 +31,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
 
   return (
     <>
-      <main className="bg-[#efefef] py-10 px-[4vw] lg:px-[18vw] w-full min-h-screen flex justify-center items-center">
+      <main className="bg-[#efefef] px-[4vw] lg:px-[12vw] w-full min-h-screen flex justify-center items-center">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

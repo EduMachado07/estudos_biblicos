@@ -6,9 +6,17 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import type { ILoginUserService } from "@/service/IAuthService";
+import { useStudiesStore } from "@/context/UserContext";
 
 type LoginModelProps = {
   loginUserService: ILoginUserService;
+};
+
+type LoginResponse = {
+  author: {
+    name: string;
+    role: string;
+  };
 };
 
 export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
@@ -21,18 +29,18 @@ export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
   });
   const [apiError, setApiError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { setAuthor } = useStudiesStore();
 
   const { mutate } = useMutation<
-    string,
+    LoginResponse,
     AxiosError<{ message: string; status: string }>,
     SchemaLoginUserType
   >({
     mutationFn: async (user) => {
-      const data = await loginUserService.exec(user.email, user.password);
-      return data;
+      const { author } = await loginUserService.exec(user.email, user.password);
+      return { author };
     },
     onError: (error) => {
-      // console.log(error);
       if (error.response?.data?.message || error.response?.status) {
         setApiError(
           "Erro:" + error.response?.status + " " + error.response.data.message
@@ -45,9 +53,12 @@ export const useLoginModel = ({ loginUserService }: LoginModelProps) => {
       }
     },
     onSuccess: (data) => {
-      // console.log(data);
       setApiError(null);
-      navigate("/create");
+      setAuthor({
+        name: data.author?.name,
+        role: data.author?.role,
+      });
+      navigate("/profile");
     },
   });
 

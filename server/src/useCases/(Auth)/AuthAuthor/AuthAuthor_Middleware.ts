@@ -1,6 +1,5 @@
 import { Response, NextFunction } from "express";
 import { IAuthAuthor } from "./AuthAuthor_DTO";
-import jwt from "jsonwebtoken";
 import { Unauthorized } from "../../../repositories/IErrorRepository";
 import { Token } from "../../../entities/Token";
 import { Role } from "../../../entities/User";
@@ -18,13 +17,15 @@ export class AuthAuthorMiddleware {
         throw new Unauthorized("Acesso negado. Token não fornecido.");
       }
 
-      const { id, role } = await this.tokenRepository.verifyAccess(accessToken);
+      const { id, role, name } = await this.tokenRepository.verifyAccess(accessToken);
 
       if (role === Role.READER) {
         throw new Unauthorized("Acesso negado. Permissão insuficiente.");
       }
 
       req.authorId = id;
+      req.role = role;
+      req.name = name;
       next();
     } catch (err: any) {
       if (err.name === "TokenExpiredError") {

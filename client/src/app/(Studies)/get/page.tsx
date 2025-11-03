@@ -1,9 +1,12 @@
+import { GetStudyAllService } from "@/service/implementations/GetStudyAllService";
 import { useGetStudiesModel } from "./getStudies.model";
 import { GetStudiesView } from "./getStudies.view";
 
-type GetStudiesPageProps = ReturnType<typeof useGetStudiesModel>;
-
-export const GetStudiesPage = (props: GetStudiesPageProps) => {
-  return <GetStudiesView {...props} />;
+export const GetStudiesPage = () => {
+  const getStudyAll = new GetStudyAllService()
+  const methods = useGetStudiesModel({
+    getAllStudiesService: getStudyAll
+  });
+  return <GetStudiesView {...methods} />;
 };
 

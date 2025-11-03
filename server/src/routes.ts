@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response } from "express";
-import { registerUserController } from "./useCases/(User)/RegisterUser";
-import { loginUserController } from "./useCases/(User)/LoginUser";
-import { createStudyController } from "./useCases/(Study)/CreateStudy";
 import { upload } from "./providers/MulterConfig";
+import { registerUserController } from "./useCases/(User)/RegisterUser";
+import { loginUserController } from "./useCases/(Auth)/LoginUser";
+import { createStudyController } from "./useCases/(Study)/CreateStudy";
 import {
   getStudyByIdController,
   getStudyController,
@@ -11,6 +11,8 @@ import { deleteStudyController } from "./useCases/(Study)/DeleteStudy";
 import { updateStudyController } from "./useCases/(Study)/UpdateStudy";
 import { authAuthorMiddleware } from "./useCases/(Auth)/AuthAuthor";
 import { refreshTokenController } from "./useCases/(Auth)/RefreshToken";
+import { getStudiesAuthorController } from "./useCases/(Study)/GetStudiesAuthor";
+import { logoutUserController } from "./useCases/(Auth)/LogoutUser";
 
 const router = express.Router();
 
@@ -20,6 +22,9 @@ router.post("/register", (req: Request, res: Response, next: NextFunction) => {
 router.post("/login", (req: Request, res: Response, next: NextFunction) => {
   return loginUserController.handle(req, res, next);
 });
+router.post("/logout", (req: Request, res: Response, next: NextFunction) => {
+  return logoutUserController.handle(req, res, next);
+});
 router.post("/refresh", (req: Request, res: Response) => {
   return refreshTokenController.handle(req, res);
 });
@@ -28,10 +33,19 @@ router.post("/refresh", (req: Request, res: Response) => {
 router.get("/study", (req: Request, res: Response, next: NextFunction) => {
   return getStudyController.handle(req, res, next);
 });
-router.get("/study/:user/:slug", (req: Request, res: Response, next: NextFunction) => {
-  return getStudyByIdController.handle(req, res, next);
-});
-
+router.get(
+  "/study/:user/:slug",
+  (req: Request, res: Response, next: NextFunction) => {
+    return getStudyByIdController.handle(req, res, next);
+  }
+);
+router.get(
+  "/study/author",
+  authAuthorMiddleware.handle,
+  (req: Request, res: Response, next: NextFunction) => {
+    return getStudiesAuthorController.handle(req, res, next);
+  }
+);
 router.post(
   "/study",
   upload.single("thumbnail"),

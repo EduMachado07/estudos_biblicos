@@ -4,7 +4,6 @@ import type { useGetStudyBySlugModel } from "./getStudyBySlug.model";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Copy } from "lucide-react";
-import { useState } from "react";
 
 type GetStudyBySlugViewProps = ReturnType<typeof useGetStudyBySlugModel>;
 
@@ -13,9 +12,9 @@ export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
 
   return (
     <>
-      <main className="flex flex-col items-center gap-10 py-14 px-[4vw] lg:px-[18vw]">
-        <section className="w-full flex gap-8 items-start">
-          <div className="w-2/6 h-64 overflow-hidden rounded-sm shadow-md">
+      <main className="flex flex-col items-center md:gap-10 gap-6 px-[4vw] xl:px-[10vw]">
+        <section className="w-full flex max-lg:flex-col gap-4 md:gap-8 items-start">
+          <div className="lg:w-2/6 w-full lg:h-64 h-80 overflow-hidden rounded-sm shadow-md">
             <img
               src={study?.thumbnailUrl}
               alt="Imagem do estudo"
@@ -25,10 +24,6 @@ export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
 
           <div className="flex-1 flex flex-col gap-3">
             <h1 className="font-title text-4xl text-pretty">{study?.title}</h1>
-
-            {/* <p className="text-base font-body-medium border border-red-500 text-red-500/100 w-fit p-0.5 px-4 rounded-sm">
-              Salvação  
-            </p> */}
 
             <p className="text-gray-600 font-body text-xl leading-relaxed">
               {study?.description}
@@ -45,7 +40,7 @@ export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
             {study?.author.name}
           </span>
         </h1>
-        <section className="w-[95%]">
+        <section className="lg:w-[95%] w-full">
           {study?.body && (
             <TipTapEditor
               key={study.body}
@@ -58,7 +53,7 @@ export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
 
         <section className="w-full flex justify-between items-center">
           <p
-            className={`p-1 px-4 rounded-sm font-body-medium text-left capitalize
+            className={`p-1 md:px-4 px-2 max-md:text-sm rounded-sm font-body-medium text-left capitalize
             ${tagStyle?.border ?? "border border-zinc-800"}
             ${tagStyle?.text ?? "text-zinc-800"}
           `}

@@ -1,5 +1,5 @@
+import type { IStudies } from "@/lib/IStudies";
 import { AxiosInstance } from "../AxiosInstance";
-import type { IStudies } from "@/app/(Studies)/get/getStudies.type";
 import type { IGetStudyAllService } from "../IStudyService";
 
 export class GetStudyAllService implements IGetStudyAllService {

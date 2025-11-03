@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 export class LoginUserUseCase {
   constructor(
     private userRepository: IUserRepository,
-    private tokenRepository: ITokenRepository,
+    private tokenRepository: ITokenRepository
   ) {}
 
   async execute(data: ILoginUserDTO) {
@@ -31,16 +31,20 @@ export class LoginUserUseCase {
     const accessToken = await this.tokenRepository.signAccess({
       id: userAlreadyExists.id,
       name: userAlreadyExists.name,
-      email: userAlreadyExists.email,
+      // email: userAlreadyExists.email,
       role: userAlreadyExists.role,
     });
     const refreshToken = await this.tokenRepository.signRefresh({
       id: userAlreadyExists.id,
       name: userAlreadyExists.name,
-      email: userAlreadyExists.email,
+      // email: userAlreadyExists.email,
       role: userAlreadyExists.role,
     });
 
-    return { accessToken, refreshToken }
+    return {
+      accessToken,
+      refreshToken,
+      author: { name: userAlreadyExists.name, role: userAlreadyExists.role },
+    };
   }
 }

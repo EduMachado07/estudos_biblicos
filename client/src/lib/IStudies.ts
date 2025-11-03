@@ -15,6 +15,7 @@ export interface IStudies {
   createdAt?: string;
   updatedAt?: string;
 }
+
 export interface ITagFilters {
   tag: string;
   color?: string; // classe usada para hover
