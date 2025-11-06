@@ -30,10 +30,8 @@ export const ProfilePage = () => {
               <span className="font-body-medium">Papel:</span> {author?.role}
             </p>
           </div>
-          <Link to="/create" className="w-fit self-end">
-            <Button size={"lg"}>
-              Criar novo estudo
-            </Button>
+          <Link to={author ? "/create" : "/login"} className="w-fit self-end">
+            <Button size={"lg"}>Criar novo estudo</Button>
           </Link>
         </section>
         <Separator />

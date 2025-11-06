@@ -22,7 +22,7 @@ export const GetStudiesByAuthor = (props: GetStudiesViewProps) => {
         {status === "success" && (
           <>
             {allStudies.map((study, index) => (
-              <StudyCard.Root key={index} slug={`/study/${study.slug}`}>
+              <StudyCard.Root key={index} slug={`/edit/${study.slug}`}>
                 <StudyCard.Image image={study.thumbnailUrl} />
                 <StudyCard.Details
                   id={study.id!}

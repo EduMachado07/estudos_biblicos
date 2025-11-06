@@ -91,16 +91,16 @@ export const TipTapEditor = ({
   return (
     <section>
       {/* editor */}
-      <div className={`${!readonly && "border"} max-w-full rounded-md`}>
+      <div className={`${!readonly && "border border-[#b9b9b9]"} max-w-full rounded-md`}>
         {!readonly && (
-          <div className="border-b p-2 flex">
+          <div className="border-b border-[#b9b9b9] p-2 flex">
             <ToolBar editor={editor} />
           </div>
         )}
         <EditorContent editor={editor} />
         {/* counter */}
         {!readonly && (
-          <div className="border-t py-1 md:py-2 pr-2 md:pr-4 w-full flex gap-1 justify-end font-semibold text-sm md:text-base">
+          <div className="border-t border-[#b9b9b9] py-1 md:py-2 pr-2 md:pr-4 w-full flex gap-1 justify-end font-semibold text-sm md:text-base">
             {charactersCount} caracteres <Dot /> {wordsCount} palavras
           </div>
         )}

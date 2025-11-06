@@ -8,7 +8,15 @@ import { Copy } from "lucide-react";
 type GetStudyBySlugViewProps = ReturnType<typeof useGetStudyBySlugModel>;
 
 export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
-  const { error, isLoading, refetch, study, tagStyle, handleCopyLink, copied, formatDate } = props;
+  const {
+    error,
+    status,
+    refetch,
+    study,
+    handleCopyLink,
+    copied,
+    formatDate,
+  } = props;
 
   return (
     <>
@@ -30,7 +38,8 @@ export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
             </p>
 
             <p className="font-body-medium text-zinc-800">
-              {formatDate(study?.updatedAt)} • Tempo de leitura: {study?.readingTime} min
+              {formatDate(study?.updatedAt)} • Tempo de leitura:{" "}
+              {study?.readingTime} min
             </p>
           </div>
         </section>
@@ -53,9 +62,7 @@ export const GetStudyBySlugView = (props: GetStudyBySlugViewProps) => {
 
         <section className="w-full flex justify-between items-center">
           <p
-            className={`p-1 md:px-4 px-2 max-md:text-sm rounded-sm font-body-medium text-left capitalize
-            ${tagStyle?.border ?? "border border-zinc-800"}
-            ${tagStyle?.text ?? "text-zinc-800"}
+            className={`p-1 md:px-4 px-2 max-md:text-sm rounded-sm font-body-medium text-left capitalize border border-zinc-800 text-zinc-800
           `}
           >
             {study?.tag}

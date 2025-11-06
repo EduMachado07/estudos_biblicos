@@ -10,25 +10,35 @@ import { CreateStudyPage } from "./app/(Studies)/create/page";
 import { GetStudyBySlugPage } from "./app/(Studies)/getBySlug/page";
 import { ProfilePage } from "./pages/profile";
 import { GetStudiesPage } from "./app/(Studies)/get/page";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { UpdateStudyPage } from "./app/(Studies)/update/page";
 
 const queryClient = new QueryClient();
 
 const routes = createBrowserRouter([
   {
-    path: "",
-    element: < App />,
+    element: <App />,
     children: [
       {
         path: "/",
         element: <GetStudiesPage />,
       },
       {
-        path: "/create",
-        element: <CreateStudyPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/create",
+            element: <CreateStudyPage />,
+          },
+        ],
       },
       {
         path: "/study/*",
         element: <GetStudyBySlugPage />,
+      },
+      {
+        path: "/edit/*",
+        element: <UpdateStudyPage />,
       },
       {
         path: "/profile",

@@ -21,6 +21,7 @@ import { CloudUpload } from "lucide-react";
 import { useRef, useState } from "react";
 import { TipTapEditor } from "@/components/TipTap/TipTapEditor";
 import type { useCreateStudiesModel } from "./createStudies.model";
+import { Textarea } from "@/components/ui/textarea";
 
 type CreateStudiesViewProps = ReturnType<typeof useCreateStudiesModel>;
 
@@ -48,7 +49,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                     <div>
                       {/* Preview da imagem */}
                       {preview ? (
-                        <div className="flex flex-col gap-2 md:gap-4 p-2 md:p-6 items-end shadow-sm relative border rounded-md overflow-hidden">
+                        <div className="flex flex-col gap-2 md:gap-4 p-2 md:p-6 items-end shadow-sm relative border border-[#b9b9b9] rounded-md overflow-hidden">
                           <img
                             src={preview}
                             alt="Preview"
@@ -64,7 +65,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                           </Button>
                         </div>
                       ) : (
-                        <div className="shadow-2xs flex flex-col justify-center gap-1.5 items-center h-120 w-full border-zinc-300 border-2 border-dashed object-cover rounded-md">
+                        <div className="shadow-2xs flex flex-col justify-center gap-1.5 items-center h-120 w-full border-[#b9b9b9] border-2 border-dashed object-cover rounded-md">
                           <CloudUpload className="size-18 stroke-blue-600" />
                           <h1 className="font-title capitalize text-lg">
                             imagem do estudo
@@ -118,7 +119,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                 <FormItem>
                   <FormLabel>Título</FormLabel>
                   <FormControl>
-                    <Input placeholder="Título do estudo" {...field} />
+                    <Input maxLength={100} placeholder="Título do estudo" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,7 +133,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                 <FormItem>
                   <FormLabel>Descrição</FormLabel>
                   <FormControl>
-                    <Input placeholder="Descrição breve do estudo" {...field} />
+                    <Textarea className="max-h-20" maxLength={300} placeholder="Descrição breve do estudo" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

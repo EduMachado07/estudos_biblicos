@@ -2,7 +2,6 @@ import type { IGetStudyBySlugService } from "@/service/IStudyService";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { useState } from "react";
-import type { ITagFilters } from "@/lib/IStudies";
 
 type GetStudyModelProps = {
   getStudyBySlugService: IGetStudyBySlugService;
@@ -14,7 +13,7 @@ export const useGetStudyBySlugModel = ({
   const params = useParams();
   const slug = params["*"];
 
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, status, error, refetch } = useQuery({
     queryKey: ["study", slug],
     queryFn: async () => {
       if (!slug) {
@@ -27,64 +26,6 @@ export const useGetStudyBySlugModel = ({
     staleTime: 5 * 60 * 1000,
   });
 
-  const tagFilters: ITagFilters[] = [
-    {
-      tag: "Todas as tags",
-      color: "bg-gray-500/20",
-      borderColor: "border border-zinc-800",
-      textColor: "text-zinc-900",
-    },
-    {
-      tag: "salvacao",
-      color: "bg-red-600/20",
-      borderColor: "border border-red-700",
-      textColor: "text-red-700",
-    },
-    {
-      tag: "espírito santo",
-      color: "bg-yellow-600/20",
-      borderColor: "border border-yellow-700",
-      textColor: "text-yellow-700",
-    },
-    {
-      tag: "cura",
-      color: "bg-blue-600/20",
-      borderColor: "border border-blue-700",
-      textColor: "text-blue-700",
-    },
-    {
-      tag: "apocalipse",
-      color: "bg-purple-600/20",
-      borderColor: "border border-purple-700",
-      textColor: "text-purple-700",
-    },
-    {
-      tag: "família",
-      color: "bg-green-600/20",
-      borderColor: "border border-green-700",
-      textColor: "text-green-700",
-    },
-  ];
-
-  const getTagStyle = (tag: string) => {
-    const tagFilter = tagFilters.find((filter) => filter.tag === tag);
-    if (!tagFilter) {
-      return {
-        bg: "bg-gray-400/20",
-        border: "border border-zinc-800",
-        text: "text-zinc-800",
-      };
-    }
-
-    // extrai as classes
-    // const bg = tagFilter.color;
-    const border = tagFilter.borderColor;
-    const text = tagFilter.textColor;
-
-    return { border, text };
-  };
-
-  const tagStyle = data?.tag ? getTagStyle(data?.tag) : null;
 
   const [copied, setCopied] = useState(false);
 
@@ -116,10 +57,9 @@ export const useGetStudyBySlugModel = ({
 
   return {
     study: data,
-    isLoading,
+    status,
     error,
     refetch,
-    tagStyle,
     copied,
     handleCopyLink,
     formatDate

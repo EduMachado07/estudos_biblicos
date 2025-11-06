@@ -16,7 +16,7 @@ export class UpdateStudyUseCase {
       throw new NotFound("Estudo não encontrado no sistema");
     }
 
-    if (studyExists.author !== data.authorId) {
+    if (studyExists.authorId !== data.authorId) {
       throw new Unauthorized("Você não tem permissão para alterar este estudo");
     }
 
@@ -37,13 +37,16 @@ export class UpdateStudyUseCase {
       thumbnailUrl = uploadResult.url;
     }
 
-    const { authorId, ...rest } = data;
-    const dataStudy: Partial<Study> = { ...rest, thumbnailId, thumbnailUrl };
+    const { authorId, studyId, ...rest } = data;
+    const dataStudy: Partial<Study> = { ...rest, id: studyId, thumbnailId, thumbnailUrl };
 
     const studyUpdated = await this.studyRepository.updateById(
       data.studyId,
       dataStudy
     );
+
+    // console.log("study:", data);
+    // console.log("studyUpdated:", studyUpdated);
     return studyUpdated;
   }
 }
