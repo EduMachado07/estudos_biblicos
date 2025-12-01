@@ -57,7 +57,7 @@ export const useCreateStudiesModel = ({
       toast.success("Estudo criado com sucesso!", {
         id: "create-study",
         duration: 1500,
-        onAutoClose: () => navigate("/"),
+        onAutoClose: () => navigate("/profile"),
       });
     },
   });

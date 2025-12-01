@@ -1,8 +1,7 @@
 import { Plus, Search } from "lucide-react";
 import { Button } from "./ui/button";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useStudiesStore } from "@/context/UserContext";
-import { LogoutPage } from "@/app/logout/page";
 
 export const Navbar = () => {
   const { author } = useStudiesStore();
@@ -13,19 +12,13 @@ export const Navbar = () => {
         <NavLink to="/" className="font-title text-2xl">
           Estudos DPI
         </NavLink>
-        {/* <nav>
-          <ul className="flex gap-4">
-            <NavLink to="">Estudos</NavLink>
-          </ul>
-        </nav> */}
       </section>
-      <section className="max-md:hidden flex gap-7 items-center">
+      <section className="flex gap-7 items-center">
         {author ? (
           <>
-            <span className="font-body-medium text-zinc-600">
-              Olá, {author.name}
-            </span>
-            <LogoutPage />
+            <Link to="/profile">
+              <Button>Meus estudos</Button>
+            </Link>
           </>
         ) : (
           <NavLink to="/login">
@@ -33,12 +26,12 @@ export const Navbar = () => {
           </NavLink>
         )}
       </section>
-      <section className="md:hidden flex gap-4 items-center">
+      {/* <section className="md:hidden flex gap-4 items-center">
         <Search className="text-zinc-400" size={20} />
         <Button>
           <Plus />
         </Button>
-      </section>
+      </section> */}
     </header>
   );
 };

@@ -36,7 +36,7 @@ export interface IDeleteStudyService {
   exec: (id: string) => Promise<void>;
 }
 export interface IUpdateStudyService {
-  exec: (id: string | undefined, data: FormData) => Promise<void>;
+  exec: (id: string, data: FormData) => Promise<void>;
 }
 export interface IDeleteStudyService {
   exec: (id: string) => Promise<void>;

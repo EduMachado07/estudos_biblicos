@@ -7,7 +7,7 @@ function App() {
     <>
       <main className="bg-[#efefef] min-h-dvh pb-8 px-[3vw] lg:px-[8vw] w-full flex flex-col gap-4 md:gap-8">
         <Navbar />
-        <hr className="-mt-4" />
+        <hr className="-mt-3" />
 
         <section className="flex-1">
           <Outlet />

@@ -19,8 +19,6 @@ export const GetStudiesView = (props: GetStudiesViewProps) => {
     searchTerm,
   } = props;
 
-  const [widthSearch, setWidthSearch] = useState<boolean>(false);
-
   return (
     <>
       <section className="flex flex-col gap-6 md:gap-8 my-4">
@@ -43,12 +41,10 @@ export const GetStudiesView = (props: GetStudiesViewProps) => {
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                 }}
-                onFocus={() => setWidthSearch(true)}
-                onBlur={() => setWidthSearch(false)}
               />
             </div>
 
-            <section className="w-fit flex lg:flex-col gap-1 whitespace-nowrap mb-3">
+            <section className="w-fit flex lg:flex-col gap-1 whitespace-nowrap mb-3 max-md:text-sm">
               {tagFilters.map((filter, index) => {
                 const isActive = selectedTag === filter.tag;
                 return (
@@ -103,6 +99,12 @@ export const GetStudiesView = (props: GetStudiesViewProps) => {
                   </StudyCard.Root>
                 ))}
               </>
+            )}
+
+            {status === "success" && filteredStudies.length === 0 && (
+              <p className="col-span-full text-center text-xl font-body-medium text-gray-600">
+                Nenhum estudo encontrado.
+              </p>
             )}
 
             {props.isFetchingNextPage &&

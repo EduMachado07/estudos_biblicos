@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Toaster } from "sonner";
-import { Controller } from "react-hook-form";
+import { DeleteStudyPage } from "../delete/page";
 
 type UpdateStudyViewProps = ReturnType<typeof useUpdateStudyModel>;
 
@@ -216,14 +216,14 @@ export const UpdateStudyView = (props: UpdateStudyViewProps) => {
               <FormField
                 control={form.control}
                 name="body"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Corpo</FormLabel>
                     <FormControl>
                       <TipTapEditor
-                        key={field.value}
-                        content={field.value}
-                        onChange={field.onChange}
+                        key={data?.id}
+                        content={form.watch("body") || ""}
+                        onChange={(html) => form.setValue("body", html, { shouldDirty: true })}
                         placeholder="Escreva o conteúdo do estudo aqui..."
                       />
                     </FormControl>
@@ -263,14 +263,19 @@ export const UpdateStudyView = (props: UpdateStudyViewProps) => {
                   </FormItem>
                 )}
               />
-              <Button
-                size={"lg"}
-                type="submit"
-                disabled={status === "loading"}
-                className="self-end md:px-12 max-md:w-1/2"
-              >
-                Atualizar estudo
-              </Button>
+
+              <section className="w-full flex max-md:flex-col gap-2 justify-end">
+                <DeleteStudyPage id={data?.id || ""} />
+
+                <Button
+                  size={"lg"}
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="md:px-12 max-md:w-full"
+                >
+                  Atualizar estudo
+                </Button>
+              </section>
             </form>
 
             <Toaster />

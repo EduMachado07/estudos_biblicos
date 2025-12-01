@@ -21,6 +21,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import { CharacterCount } from "@tiptap/extensions";
 import "prosemirror-view/style/prosemirror.css";
 import { Dot } from "lucide-react";
+import { useEffect, useRef } from "react";
 // import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ITipTapEditorProps {
@@ -36,6 +37,9 @@ export const TipTapEditor = ({
   placeholder,
   readonly = false,
 }: ITipTapEditorProps) => {
+  const lastEmittedRef = useRef<string | null>(null);
+  const isSettingFromOutsideRef = useRef(false);
+
   const editor = useEditor({
     editable: !readonly,
     extensions: [
@@ -64,19 +68,23 @@ export const TipTapEditor = ({
         types: ["heading", "paragraph"],
       }),
     ],
-    content: content || `<p>${placeholder}</p>`,
+    content: content ?? (placeholder ? `<p>${placeholder}</p>` : ""),
     editorProps: {
       attributes: {
         class: "prose prose-sm max-w-none focus:outline-none p-4 min-h-96",
       },
     },
     onUpdate: ({ editor }) => {
-      if (!readonly && onChange) {
-        const html = editor.getHTML();
-        onChange(html);
+      if (readonly) return;
+      const html = editor.getHTML();
+
+      // evita re-emissão do mesmo valor e loops
+      if (lastEmittedRef.current !== html && !isSettingFromOutsideRef.current) {
+        lastEmittedRef.current = html;
+        onChange?.(html);
       }
     },
-    shouldRerenderOnTransaction: true,
+    shouldRerenderOnTransaction: false,
     immediatelyRender: true,
   });
 
@@ -88,10 +96,36 @@ export const TipTapEditor = ({
     }),
   });
 
+  useEffect(() => {
+    if (!editor) return;
+    const current = editor.getHTML();
+
+    if (typeof content === "string" && content !== current) {
+      isSettingFromOutsideRef.current = true;
+      try {
+        editor.commands.setContent(content, { emitUpdate: false });
+        lastEmittedRef.current = content;
+      } finally {
+        requestAnimationFrame(() => {
+          isSettingFromOutsideRef.current = false;
+        });
+      }
+    }
+  }, [content, editor]);
+
+  useEffect(() => {
+    if (!editor) return;
+    editor.setEditable(!readonly);
+  }, [readonly, editor]);
+
   return (
     <section>
       {/* editor */}
-      <div className={`${!readonly && "border border-[#b9b9b9]"} max-w-full rounded-md`}>
+      <div
+        className={`${
+          !readonly && "border border-[#b9b9b9]"
+        } max-w-full rounded-md`}
+      >
         {!readonly && (
           <div className="border-b border-[#b9b9b9] p-2 flex">
             <ToolBar editor={editor} />

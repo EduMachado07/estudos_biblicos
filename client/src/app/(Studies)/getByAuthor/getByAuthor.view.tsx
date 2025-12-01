@@ -1,5 +1,7 @@
 import { StudyCard } from "@/components/StudyCard";
 import type { useGetStudiesByAuthorModel } from "./getByAuthor.model";
+import { Link } from "react-router";
+import { Button } from "@/components/ui/button";
 
 type GetStudiesViewProps = ReturnType<typeof useGetStudiesByAuthorModel>;
 
@@ -17,6 +19,17 @@ export const GetStudiesByAuthor = (props: GetStudiesViewProps) => {
           <p className="col-span-full text-center text-xl font-body-medium text-red-600">
             Erro ao carregar os estudos. Tente novamente.
           </p>
+        )}
+
+        {status === "success" && allStudies.length === 0 && (
+          <section className="col-span-full flex flex-col items-center justify-center gap-4">
+            <p className="text-center text-xl font-body-medium text-gray-600">
+              Você ainda não criou nenhum estudo.
+            </p>
+            <Link to="/create">
+              <Button variant={"outline"}>Criar novo estudo</Button>
+            </Link>
+          </section>
         )}
 
         {status === "success" && (

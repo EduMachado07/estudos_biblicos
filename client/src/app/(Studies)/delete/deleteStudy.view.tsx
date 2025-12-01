@@ -5,27 +5,35 @@ import {
   DialogTrigger,
   DialogContent,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
-import { DeleteStudyService } from "@/service/implementations/DeleteStudyService";
 
 type DeleteStudyViewProps = ReturnType<typeof useDeleteStudyModel>;
 
 export const DeleteStudyView = (props: DeleteStudyViewProps) => {
-  const { deleteStudy, isDeleting,} = props;
+  const { deleteStudy, isDeleting } = props;
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="destructive">Excluir Estudo</Button>
+        <Button variant="outline" size={"lg"}>
+          Excluir Estudo
+        </Button>
       </DialogTrigger>
       <DialogContent>
-        <p>
-          Tem certeza que deseja excluir este estudo?
-          <br /> Esta ação não pode ser
-          desfeita.
-        </p>
+        <DialogHeader>
+          <DialogTitle>Excluir Estudo</DialogTitle>
+          <p>
+            Tem certeza que deseja excluir este estudo?
+            <br /> Esta ação não pode ser desfeita.
+          </p>
+        </DialogHeader>
         <DialogFooter>
-          <Button variant="secondary">Cancelar</Button>
+          <DialogClose asChild>
+            <Button variant="secondary">Cancelar</Button>
+          </DialogClose>
           <Button
             variant="destructive"
             onClick={() => deleteStudy()}

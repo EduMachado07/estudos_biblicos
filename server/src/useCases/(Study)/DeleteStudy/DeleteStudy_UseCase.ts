@@ -15,7 +15,7 @@ export class DeleteStudyUseCase {
       throw new NotFound("Estudo não encontrado no sistema");
     }
 
-    if (studyExists.author !== data.authorId) {
+    if (studyExists.authorId !== data.authorId) {
       throw new Unauthorized("Você não tem permissão para excluir este estudo");
     }
     await this.uploadThumbnail.destroy(studyExists.thumbnailId);

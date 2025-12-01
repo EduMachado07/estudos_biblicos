@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -25,7 +25,7 @@ export const useUpdateStudyModel = ({
 }: UpdateStudyModelProps) => {
   const params = useParams<string>();
   const slug = params["*"];
-
+  const queryClient = useQueryClient();
   const form = useForm<SchemaUpdateStudyType>({
     resolver: zodResolver(SchemaUpdateStudy),
     defaultValues: {
@@ -75,7 +75,7 @@ export const useUpdateStudyModel = ({
         setPreview(data.thumbnailUrl);
       }
     }
-  }, [data, form]);
+  }, [data]);
 
   const { mutate } = useMutation<
     void,
@@ -83,7 +83,7 @@ export const useUpdateStudyModel = ({
     FormData
   >({
     mutationFn: async (formData) => {
-      await updateStudyService.exec(data?.id, formData);
+      await updateStudyService.exec(data?.id || "", formData);
     },
 
     onMutate: () => {
@@ -105,7 +105,12 @@ export const useUpdateStudyModel = ({
       }
     },
 
-    onSuccess: () => {
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["studiesAuthor"] }),
+        queryClient.invalidateQueries({ queryKey: ["study", slug] }),
+      ]);
+      
       toast.success("Estudo atualizado com sucesso!", {
         id: "update-study",
         duration: 1500,

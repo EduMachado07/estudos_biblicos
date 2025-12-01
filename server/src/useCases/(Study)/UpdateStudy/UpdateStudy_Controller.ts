@@ -17,8 +17,6 @@ export class UpdateStudyController {
       });
       const thumbnail = req.file?.buffer;
 
-      console.log(data, thumbnail)
-
       const studyUpdated = await this.updateStudyUseCase.execute(
         data,
         thumbnail

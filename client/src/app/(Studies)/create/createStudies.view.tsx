@@ -150,7 +150,7 @@ export const CreateStudiesView = (props: CreateStudiesViewProps) => {
                   <FormLabel>Corpo</FormLabel>
                   <FormControl>
                     <TipTapEditor
-                      content={field.value}
+                      content={"<h2>Um Momento de Reflexão</h2>\n<p>O sol estava se pondo quando decidi caminhar pela rua principal da cidade. Eu sempre gostei desse horário, porque tudo fica mais calmo: as pessoas indo para casa, as luzes das lojas começando a acender, e o vento trazendo um pouco do cheiro das árvores do parque no fim da avenida.</p>\n<p>Enquanto caminhava, fiquei pensando em como pequenos momentos do dia podem <strong>mudar totalmente</strong> nosso humor. E senti que aquela caminhada era exatamente o que eu precisava para <em>organizar meus pensamentos</em>. É incrível como uma simples caminhada pode ter um impacto tão grande em nossa perspectiva.</p>\n<h3>Os Benefícios da Caminhada</h3>\n<ul>\n  <li>Ajuda a <strong>reduzir o estresse</strong> e a ansiedade;</li>\n  <li>Permite um momento de <em>reflexão</em> e introspecção;</li>\n  <li>Oferece a oportunidade de <strong>apreciar a natureza</strong> e os arredores.</li>\n</ul>\n<p>Essa caminhada me fez perceber que, às vezes, é necessário <em>parar e respirar</em> para realmente apreciar a beleza ao nosso redor e encontrar a paz interior. E, quem sabe, talvez essa seja a lição mais importante que podemos aprender com os pequenos momentos do dia.</p>"}
                       onChange={field.onChange}
                       placeholder="Escreva o conteúdo do estudo aqui..."
                     />

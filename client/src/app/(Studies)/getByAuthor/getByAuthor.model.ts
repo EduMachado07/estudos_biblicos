@@ -36,7 +36,7 @@ export const useGetStudiesByAuthorModel = ({
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useInfiniteQuery({
-      queryKey: ["studiesByAuthor"],
+      queryKey: ["studiesAuthor"],
       queryFn: ({ pageParam }) => fetchStudiesByAuthor({ pageParam }),
       initialPageParam: { offset: 0, limit: 9 },
       getNextPageParam: (lastPage) => lastPage.next || undefined,

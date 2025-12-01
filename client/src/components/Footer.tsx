@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer className="w-full flex justify-between">
+    <footer className="w-full flex max-md:flex-col justify-between items-center">
       <section className="flex justify-between">
         <h1 className="font-title text-2xl">Estudos DPI</h1>
       </section>

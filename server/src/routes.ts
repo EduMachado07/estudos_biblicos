@@ -13,6 +13,7 @@ import { authAuthorMiddleware } from "./useCases/(Auth)/AuthAuthor";
 import { refreshTokenController } from "./useCases/(Auth)/RefreshToken";
 import { getStudiesAuthorController } from "./useCases/(Study)/GetStudiesAuthor";
 import { logoutUserController } from "./useCases/(Auth)/LogoutUser";
+import { formatterBodyController } from "./useCases/(Study)/FormatterBody";
 
 const router = express.Router();
 
@@ -67,6 +68,13 @@ router.patch(
   authAuthorMiddleware.handle,
   (req: Request, res: Response, next: NextFunction) => {
     return updateStudyController.handle(req, res, next);
+  }
+);
+router.post(
+  "/study/formatter",
+  // authAuthorMiddleware.handle,
+  (req: Request, res: Response, next: NextFunction) => {
+    return formatterBodyController.handle(req, res, next);
   }
 );
 

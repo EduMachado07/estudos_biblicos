@@ -7,21 +7,20 @@ export const prisma = new PrismaClient();
 
 export class PostgresStudyRepository implements IStudyRepository {
   async createSlug(author: string, title: string): Promise<string> {
-    const authorSlug = author
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+    const normalizeText = (text: string) =>
+      text
+        .normalize("NFD") // separa os acentos das letras
+        .replace(/[\u0300-\u036f]/g, "") // remove apenas os acentos
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-") // substitui qualquer coisa que não seja letra ou número por "-"
+        .replace(/^-+|-+$/g, ""); // remove "-" do início e do fim
 
-    const titleSlug = title
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
+    const authorSlug = normalizeText(author);
+    const titleSlug = normalizeText(title);
 
     let slug = `${authorSlug}/${titleSlug}`;
     let version = 2;
-
     while (await prisma.study.findUnique({ where: { slug } })) {
       slug = `${authorSlug}/${titleSlug}-v${version}`;
       version++;
@@ -112,7 +111,7 @@ export class PostgresStudyRepository implements IStudyRepository {
     const studyExists = await prisma.study.findUnique({ where: { id } });
     if (!studyExists) throw new BadRequest("Estudo não encontrado.");
 
-    const { id: _, slug: __, createdAt: ___, ...rest } = data;
+    const { id: _, createdAt: __, ...rest } = data;
 
     const updated = await prisma.study.update({
       where: { id },
