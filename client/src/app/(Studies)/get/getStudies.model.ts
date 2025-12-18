@@ -24,7 +24,7 @@ export const useGetStudiesModel = ({
   }: {
     pageParam: { offset?: number; limit?: number };
   }): Promise<IStudiesResponse> => {
-    const limit = pageParam.limit ?? 9;
+    const limit = pageParam.limit ?? 12;
     // await new Promise((resolve) => setTimeout(resolve, 1000)); // simula delay
     // throw new Error("Erro ao buscar estudos"); // simula erro
 
@@ -43,11 +43,11 @@ export const useGetStudiesModel = ({
     };
   };
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, refetch } =
     useInfiniteQuery({
       queryKey: ["studies"],
       queryFn: ({ pageParam }) => fetchStudies({ pageParam }),
-      initialPageParam: { offset: 0, limit: 9 },
+      initialPageParam: { offset: 0, limit: 12 },
       getNextPageParam: (lastPage) => lastPage.next || undefined,
     });
 
@@ -123,5 +123,6 @@ export const useGetStudiesModel = ({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    refetch,
   };
 };

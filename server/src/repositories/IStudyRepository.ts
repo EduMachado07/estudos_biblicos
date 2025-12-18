@@ -1,5 +1,4 @@
 import { Study } from "../entities/Study";
-import { IUserRepository } from "./IUserRepository";
 
 export interface IStudyRepository {
   create(data: Study): Promise<Study>;

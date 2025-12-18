@@ -14,10 +14,14 @@ export class GroqProvider {
     2. Melhore a clareza, sem mudar o sentido.
     3. Estruture o texto em HTML organizado:
     - parágrafos <p>
-    - títulos <h2>, <h3>
-    - listas <ul>, <li>
+    - títulos <h1>, <h2>, <h3>
+    - listas <ol>, <ul>, <li>
+    - sublinhado <u>
+    - linhas horizontais <hr>
     - negrito <strong>
     - itálico <em>
+    - citações <blockquote>
+
     4. Produza somente HTML válido.
 
     Texto original:

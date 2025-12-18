@@ -1,6 +1,5 @@
 import { DeleteStudyController } from "./DeleteStudy_Controller";
 import { DeleteStudyUseCase } from "./DeleteStudy_UseCase";
-import { MockStudyRepository } from "../../../repositories/implementations/MockStudyRepository";
 import { CloudinaryProvider } from "../../../providers/implementations/CloudinaryUploadImageProvider";
 import { PostgresStudyRepository } from "../../../repositories/implementations/PostgresStudyRepository";
 

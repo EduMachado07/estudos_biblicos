@@ -1,8 +1,8 @@
 import { Response, NextFunction } from "express";
 import { IAuthAuthor } from "./AuthAuthor_DTO";
 import { Unauthorized } from "../../../repositories/IErrorRepository";
-import { Token } from "../../../entities/Token";
-import { Role } from "../../../entities/User";
+// import { Token } from "../../../entities/Token";
+import { Role } from "@prisma/client";
 import { ITokenRepository } from "../../../repositories/ITokenRepository";
 
 export class AuthAuthorMiddleware {

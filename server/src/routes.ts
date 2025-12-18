@@ -72,7 +72,7 @@ router.patch(
 );
 router.post(
   "/study/formatter",
-  // authAuthorMiddleware.handle,
+  authAuthorMiddleware.handle,
   (req: Request, res: Response, next: NextFunction) => {
     return formatterBodyController.handle(req, res, next);
   }

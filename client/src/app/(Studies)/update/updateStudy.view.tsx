@@ -37,7 +37,7 @@ export const UpdateStudyView = (props: UpdateStudyViewProps) => {
   } = props;
 
   return (
-    <main className="">
+    <main>
       {/* Estado: carregando */}
       {getStatus === "pending" && (
         <div className="py-10 flex flex-col items-center gap-4">
@@ -91,7 +91,7 @@ export const UpdateStudyView = (props: UpdateStudyViewProps) => {
         </div>
       )}
 
-      <section className="bg-[#efefef] px-[4vw] lg:px-[12vw] w-full flex-1 flex justify-center items-center">
+      <section className="bg-[#efefef] lg:px-[12vw] w-full flex-1 flex justify-center items-center">
         {/* Estado: sucesso (formulário) */}
         {getStatus === "success" && data && (
           <Form {...form}>

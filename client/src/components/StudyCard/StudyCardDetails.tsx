@@ -68,11 +68,11 @@ export const StudyCardDetails = ({
   };
   return (
     <section className="h-63 p-4 flex flex-col justify-between bg-[#fafafa]">
-      <div className="flex flex-col gap-2">
-        <h1 className="capitalize font-title text-xl line-clamp-2">{title}</h1>
-        <p className="font-body line-clamp-4">{description}</p>
+      <div className="flex flex-col lg:gap-2 gap-1">
+        <h1 className="capitalize font-title sm:text-xl text-lg line-clamp-2">{title}</h1>
+        <p className="font-body line-clamp-4 text-justify text-balance">{description}</p>
       </div>
-      <div className="">
+      <>
         <hr />
         <div className="flex justify-between mt-1.5">
           <p
@@ -85,7 +85,7 @@ export const StudyCardDetails = ({
             <p className="self-end font-body -mt-1">{formatDate(createdAt)}</p>
           </div>
         </div>
-      </div>
+      </>
     </section>
   );
 };

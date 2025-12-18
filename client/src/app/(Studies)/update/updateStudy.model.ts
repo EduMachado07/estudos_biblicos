@@ -23,9 +23,15 @@ export const useUpdateStudyModel = ({
   getStudyBySlugService,
   updateStudyService,
 }: UpdateStudyModelProps) => {
-  const params = useParams<string>();
-  const slug = params["*"];
+  const { "*": slug } = useParams();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const originalStudyRef = useRef<SchemaUpdateStudyType | null>(null);
+
+  const [preview, setPreview] = useState<string | null>(null);
+
   const form = useForm<SchemaUpdateStudyType>({
     resolver: zodResolver(SchemaUpdateStudy),
     defaultValues: {
@@ -35,55 +41,53 @@ export const useUpdateStudyModel = ({
       tag: "",
     },
   });
-  const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<string | null>(null);
 
   const {
-    data,
+    data: study,
     status: getStatus,
     refetch,
   } = useQuery({
-    queryKey: ["study", slug],
-    queryFn: async () => {
-      if (!slug) {
-        throw new Error("Slug não encontrado na URL");
-      }
-      try {
-        return await getStudyBySlugService.exec(slug);
-      } catch (error) {
-        toast.error("Erro ao obter estudo. " + error, {
-          id: "get-study",
-        });
-      }
+    queryKey: ["study-by-slug", slug],
+    queryFn: () => {
+      if (!slug) throw new Error("Slug não encontrado");
+      return getStudyBySlugService.exec(slug);
     },
     enabled: !!slug,
-    retry: 1,
     staleTime: 5 * 60 * 1000,
   });
 
   useEffect(() => {
-    if (data) {
-      form.reset({
-        title: data.title || "",
-        description: data.description || "",
-        body: data.body || "",
-        tag: data.tag ?? "",
-      });
-
-      if (data?.thumbnailUrl) {
-        setPreview(data.thumbnailUrl);
-      }
+    if (study?.id) {
+      queryClient.setQueryData(["study", study.id], study);
     }
-  }, [data]);
+  }, [study, queryClient]);
+
+  useEffect(() => {
+    if (!study) return;
+
+    const initialValues = {
+      title: study.title ?? "",
+      description: study.description ?? "",
+      body: study.body ?? "",
+      tag: study.tag ?? "",
+    };
+
+    form.reset(initialValues);
+    originalStudyRef.current = initialValues;
+
+    if (study.thumbnailUrl) {
+      setPreview(study.thumbnailUrl);
+    }
+  }, [study, form]);
 
   const { mutate } = useMutation<
-    void,
-    AxiosError<{ message: string; details: string }>,
+    any,
+    AxiosError<{ message: string }>,
     FormData
   >({
     mutationFn: async (formData) => {
-      await updateStudyService.exec(data?.id || "", formData);
+      if (!study?.id) throw new Error("Estudo não carregado");
+      return updateStudyService.exec(study.id, formData);
     },
 
     onMutate: () => {
@@ -91,57 +95,67 @@ export const useUpdateStudyModel = ({
     },
 
     onError: (error) => {
-      if (error.response) {
-        toast.error(
-          "Erro ao atualizar estudo: " + error.response.data.message,
-          {
-            id: "update-study",
-          }
-        );
-      } else {
-        toast.error("Erro ao atualizar estudo. Tente novamente.", {
-          id: "update-study",
-        });
-      }
+      toast.error(
+        error.response?.data?.message ?? "Erro ao atualizar estudo.",
+        { id: "update-study" }
+      );
     },
 
-    onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["studiesAuthor"] }),
-        queryClient.invalidateQueries({ queryKey: ["study", slug] }),
-      ]);
-      
+    onSuccess: (updatedStudy) => {
+      queryClient.setQueryData(["study", updatedStudy.id], updatedStudy);
+      // queryClient.invalidateQueries({ queryKey: ["study-by-slug"] });
+      queryClient.invalidateQueries({ queryKey: ["studiesAuthor"] });
+
       toast.success("Estudo atualizado com sucesso!", {
         id: "update-study",
         duration: 1500,
-        onAutoClose: () => navigate("/profile"),
+        onAutoClose: () => {
+          if (updatedStudy.slug && updatedStudy.slug !== slug) {
+            navigate(`/studies/${updatedStudy.slug}`, { replace: true });
+          } else {
+            navigate("/profile");
+          }
+        },
       });
     },
   });
 
-  const onSubmit = (data: SchemaUpdateStudyType & { thumbnail?: File }) => {
-    const study = new FormData();
+  const onSubmit = (formData: SchemaUpdateStudyType & { thumbnail?: File }) => {
+    if (!originalStudyRef.current) return;
 
-    if (data.thumbnail) {
-      study.append("thumbnail", data.thumbnail);
+    const original = originalStudyRef.current;
+    const payload = new FormData();
+    let hasChanges = false;
+
+    (["title", "description", "body", "tag"] as const).forEach((field) => {
+      if (formData[field] !== original[field]) {
+        payload.append(field, formData[field] ?? "");
+        hasChanges = true;
+      }
+    });
+
+    if (formData.thumbnail) {
+      payload.append("thumbnail", formData.thumbnail);
+      hasChanges = true;
     }
 
-    study.append("title", data.title || "");
-    study.append("description", data.description || "");
-    study.append("body", data.body || "");
-    study.append("tag", data.tag || "");
+    if (!hasChanges) {
+      toast.info("Nenhuma alteração foi feita.");
+      return;
+    }
 
-    mutate(study);
+    mutate(payload);
   };
 
   return {
     form,
-    data,
-    refetch,
-    getStatus,
+    data: study,
+    status,
     onSubmit,
     inputRef,
     preview,
     setPreview,
+    getStatus,
+    refetch,
   };
 };

@@ -41,3 +41,6 @@ export interface IUpdateStudyService {
 export interface IDeleteStudyService {
   exec: (id: string) => Promise<void>;
 }
+export interface IFormatterStudyService {
+  exec: (content: string) => Promise<{ formattedContent: string }>;
+}

@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Role } from "../../../entities/User";
+import { Role } from "@prisma/client";
 
 export interface IAuthAuthor extends Request {
   authorId?: string;

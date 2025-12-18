@@ -10,6 +10,8 @@ export class UpdateStudyController {
 
   async handle(req: IAuthAuthor, res: Response, next: NextFunction) {
     try {
+      // console.log("UpdateStudyController: ", req.body);
+
       const data = UpdateStudySchema.parse({
         studyId: req.params.id,
         authorId: req.authorId,

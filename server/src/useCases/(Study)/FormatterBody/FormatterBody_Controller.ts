@@ -12,13 +12,14 @@ export class FormatterBodyController {
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      const { text } = FormatterBodySchema.parse(req.body);
+      const { content } = FormatterBodySchema.parse(req.body);
+      
+      const formattedContent = await this.formatterBodyUseCase.execute(content);
 
-      const formattedText = await this.formatterBodyUseCase.execute(text);
-
-      return res
-        .status(200)
-        .json({ message: "Body formatado com sucesso.", body: formattedText });
+      return res.status(200).json({
+        message: "Body formatado com sucesso.",
+        formattedContent: formattedContent,
+      });
     } catch (err) {
       if (err instanceof z.ZodError) {
         const zodValidationError = new ZodValidationError(err);

@@ -3,14 +3,14 @@ import type { AxiosRequestConfig } from "axios";
 
 // ✅ Instância base SEM interceptadores
 export const AxiosInstance = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 10000,
   withCredentials: true,
 });
 
 // ✅ Instância principal (usada no app)
 export const AxiosInstanceWithRefreshToken = axios.create({
-  baseURL: "http://localhost:3333",
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 10000,
   withCredentials: true,
 });

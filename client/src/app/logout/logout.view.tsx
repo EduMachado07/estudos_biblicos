@@ -10,6 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { useLogoutModel } from "./logout.model";
+import { LogOut } from "lucide-react";
 
 type LogoutViewProps = ReturnType<typeof useLogoutModel>;
 
@@ -19,7 +20,7 @@ export const LogoutView = (props: LogoutViewProps) => {
     <>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Sair do sistema</Button>
+          <Button size={"sm"} variant="destructive">Sair da Conta <LogOut /></Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

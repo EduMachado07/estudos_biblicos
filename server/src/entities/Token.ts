@@ -1,4 +1,4 @@
-import { Role } from "./User";
+import { Role } from "@prisma/client";
 
 export class Token {
     public id: string;

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import type { useLoginModel } from "./login.model";
+import { NavLink } from "react-router";
 
 type LoginViewProps = ReturnType<typeof useLoginModel>;
 
@@ -19,15 +20,18 @@ export const LoginView = (props: LoginViewProps) => {
   return (
     <>
       <main className="md:w-full h-screen flex justify-center items-center">
-        <section className="lg:w-1/4">
+        <section className="lg:w-1/4 w-full max-md:px-[4vw]">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="w-full flex flex-col gap-6"
             >
+              <NavLink to="/" className="font-title text-2xl absolute top-6 lg:left-[8vw] left-[4vw]">
+                Estudos DPI
+              </NavLink>
               <h1 className="font-title text-2xl">Login</h1>
               {apiError && (
-                <p className="text-red-500 text-sm font-medium">{apiError}</p>
+                <p className="text-red-500 text-sm font-medium text-wrap">{apiError}</p>
               )}
               {/* email */}
               <FormField
@@ -51,7 +55,11 @@ export const LoginView = (props: LoginViewProps) => {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Sua senha" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="Sua senha"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

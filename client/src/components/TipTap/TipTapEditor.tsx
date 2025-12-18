@@ -1,7 +1,4 @@
 import { ToolBar } from "./ToolBar";
-// extensions from tiptap
-// import StarterKit from "@tiptap/starter-kit";
-// import Highlight from '@tiptap/extension-highlight'
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import Bold from "@tiptap/extension-bold";
@@ -22,7 +19,6 @@ import { CharacterCount } from "@tiptap/extensions";
 import "prosemirror-view/style/prosemirror.css";
 import { Dot } from "lucide-react";
 import { useEffect, useRef } from "react";
-// import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ITipTapEditorProps {
   content: string | undefined;
@@ -127,11 +123,13 @@ export const TipTapEditor = ({
         } max-w-full rounded-md`}
       >
         {!readonly && (
-          <div className="border-b border-[#b9b9b9] p-2 flex">
+          <div className="border-b border-[#b9b9b9] p-2 flex justify-between">
             <ToolBar editor={editor} />
           </div>
         )}
-        <EditorContent editor={editor} />
+        <div className="text-justify text-pretty">
+          <EditorContent editor={editor} />
+        </div>
         {/* counter */}
         {!readonly && (
           <div className="border-t border-[#b9b9b9] py-1 md:py-2 pr-2 md:pr-4 w-full flex gap-1 justify-end font-semibold text-sm md:text-base">

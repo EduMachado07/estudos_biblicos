@@ -27,10 +27,11 @@ export class UpdateStudyUseCase {
       throw new NotFound("Autor não encontrado no sistema");
     }
 
-    const newSlug = await this.studyRepository.createSlug(
-      author.name,
-      data.title
-    );
+    let newSlug: string | undefined;
+
+    if (data.title) {
+      newSlug = await this.studyRepository.createSlug(author.name, data.title);
+    }
 
     let thumbnailId = studyExists.thumbnailId;
     let thumbnailUrl = studyExists.thumbnailUrl;
@@ -52,7 +53,7 @@ export class UpdateStudyUseCase {
     const { authorId, studyId, ...rest } = data;
     const dataStudy: Partial<Study> = {
       ...rest,
-      slug: newSlug,
+      ...(newSlug && { slug: newSlug }),
       id: studyId,
       thumbnailId,
       thumbnailUrl,

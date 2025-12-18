@@ -1,4 +1,5 @@
-import { Role, User } from "../../../entities/User";
+import { User } from "../../../entities/User";
+import { Role } from "@prisma/client";
 import { Conflict } from "../../../repositories/IErrorRepository";
 import { IUserRepository } from "../../../repositories/IUserRepository";
 import { IRegisterUserDTO } from "./Register_DTO";

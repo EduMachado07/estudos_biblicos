@@ -1,5 +1,5 @@
 import { Token } from "../../entities/Token";
-import { Role } from "../../entities/User";
+import { Role } from "@prisma/client";
 import { ITokenRepository } from "../ITokenRepository";
 import jwt from "jsonwebtoken";
 

@@ -27,6 +27,7 @@ import { Button } from "../ui/button";
 import { HeadingDropdown } from "./HeadingDropdown";
 import { ListDropdown } from "./ListDropdown";
 import { AlignTextDropdown } from "./AlignTextDropdown";
+import { FormatterStudyPage } from "@/app/(Studies)/formatter/page";
 // import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ToolButtonProps {
@@ -186,6 +187,11 @@ export function ToolBar({ editor }: { editor: Editor }) {
         >
           <Redo2 />
         </ToolBarButton>
+
+        <Separator className="max-md:hidden" orientation="vertical" />
+
+        <FormatterStudyPage editor={editor} />
+
       </div>
   );
 }

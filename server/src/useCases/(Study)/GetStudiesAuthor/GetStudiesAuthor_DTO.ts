@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Role } from "../../../entities/User";
+import { Role } from "@prisma/client";
 
 export const GetStudiesAuthorSchema = z.object({
   authorId: z.string().min(1, "Autor não informado"),
